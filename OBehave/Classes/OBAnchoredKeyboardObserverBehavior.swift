@@ -16,7 +16,7 @@ import UIKit
 public class OBAnchoredKeyboardObserverBehavior: OBKeyboardObserverBehavior {
     @IBOutlet public weak var anchorConstraint: NSLayoutConstraint? {
         didSet {
-            self.originalAnchorConstant = self.anchorConstraint?.constant
+            originalAnchorConstant = anchorConstraint?.constant
         }
     }
     
@@ -26,26 +26,25 @@ public class OBAnchoredKeyboardObserverBehavior: OBKeyboardObserverBehavior {
     override public func onKeyboardAppear(in rect: CGRect) {
         let newKeyboardStartPosition = rect.origin.y
         
-        if let keyboardStartPosition = self.keyboardStartPosition {
+        if let keyboardStartPosition = keyboardStartPosition {
             if keyboardStartPosition == newKeyboardStartPosition {
                 return
             }
             
-            self.anchorConstraint?.constant -= newKeyboardStartPosition - keyboardStartPosition
-            self.keyboardStartPosition = newKeyboardStartPosition
-            
-            return
+            anchorConstraint?.constant -= newKeyboardStartPosition - keyboardStartPosition
+        }
+        else {
+            anchorConstraint?.constant += rect.height
         }
         
-        self.keyboardStartPosition = newKeyboardStartPosition
-        self.anchorConstraint?.constant += rect.height
+        keyboardStartPosition = newKeyboardStartPosition
     }
     
     override public func onKeyboardDisappear(in rect: CGRect) {
-        if let originalAnchorConstant = self.originalAnchorConstant {
-            self.anchorConstraint?.constant = originalAnchorConstant
+        if let originalAnchorConstant = originalAnchorConstant {
+            anchorConstraint?.constant = originalAnchorConstant
         }
         
-        self.keyboardStartPosition = nil
+        keyboardStartPosition = nil
     }
 }

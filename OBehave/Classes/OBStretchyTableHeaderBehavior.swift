@@ -21,28 +21,28 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
                 return
             }
             
-            self.addObserver(self, forKeyPath: "imageView.image", options: .new, context: nil)
+            addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
         }
     }
 
     @IBOutlet public var tableView: UITableView? {
         didSet {
-            guard let tableView = self.tableView, let tableHeaderView = tableView.tableHeaderView else {
+            guard let tableView = tableView, let tableHeaderView = tableView.tableHeaderView else {
                 return
             }
 
-            self.headerHeight = tableHeaderView.bounds.size.height
-            self.addObserver(self, forKeyPath: "tableView.bounds", options: .new, context: nil)
-            self.addObserver(self, forKeyPath: "tableView.frame",  options: .new, context: nil)
-            self.headerView = tableView.tableHeaderView
+            headerHeight = tableHeaderView.bounds.size.height
+            addObserver(self, forKeyPath: .tableViewBounds, options: .new, context: nil)
+            addObserver(self, forKeyPath: .tableViewFrame,  options: .new, context: nil)
+            headerView = tableView.tableHeaderView
         }
     }
     
     // MARK: Private properties
     fileprivate var headerHeight: CGFloat = 0 {
         didSet {
-            self.tableView?.contentInset = UIEdgeInsetsMake(self.headerHeight, 0, 0, 0)
-            self.tableView?.contentOffset = CGPoint(x: 0, y: -self.headerHeight)
+            tableView?.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0)
+            tableView?.contentOffset = CGPoint(x: 0, y: -headerHeight)
         }
     }
     
@@ -73,14 +73,14 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
         }
         
         switch keyPath {
-        case "tableView.frame":
-            self.removeObserver(self, forKeyPath: "tableView.frame")
-            self.updateHeaderViewInView()
+        case String.tableViewFrame:
+            removeObserver(self, forKeyPath: .tableViewFrame)
+            updateHeaderViewInView()
 
-        case "tableView.bounds":
-            self.updateHeaderViewInView()
+        case String.tableViewBounds:
+            updateHeaderViewInView()
 
-        case "imageView.image":
+        case String.imageViewImage:
             headerImage = imageView?.image
             
         default:
@@ -89,16 +89,16 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
     }
     
     deinit {
-        self.removeObserver(self, forKeyPath: "tableView.frame")
-        self.removeObserver(self, forKeyPath: "tableView.bounds")
-        self.removeObserver(self, forKeyPath: "imageView.image")
+        removeObserver(self, forKeyPath: .tableViewFrame)
+        removeObserver(self, forKeyPath: .tableViewBounds)
+        removeObserver(self, forKeyPath: .imageViewImage)
     }
 }
 
 // MARK: - Private methods
 private extension OBStretchyTableHeaderBehavior {
     func updateHeaderViewInView() {
-        guard let tableView = self.tableView else {
+        guard let tableView = tableView else {
             return
         }
         
@@ -111,15 +111,22 @@ private extension OBStretchyTableHeaderBehavior {
                                 width: tableView.bounds.size.width,
                                 height: max(minHeaderHeight, -tableView.contentOffset.y))
         
-        let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + self.headerHeight) / maxEffectDistance))
-        if let effectedImage = self.effect?.performEffect?(on: self.headerImage, percentage: percentage) as? UIImage {
-            self.removeObserver(self, forKeyPath: "imageView.image")
-            self.imageView?.image = effectedImage
-            self.addObserver(self, forKeyPath: "imageView.image", options: .new, context: nil)
+        let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + headerHeight) / maxEffectDistance))
+        
+        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
+            removeObserver(self, forKeyPath: .imageViewImage)
+            imageView?.image = effectedImage
+            addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
         }
         
-        self.headerView?.frame = headerRect
+        headerView?.frame = headerRect
     }
+}
+
+private extension String {
+    static let tableViewFrame  = "tableView.frame"
+    static let tableViewBounds = "tableView.bounds"
+    static let imageViewImage  = "imageView.image"
 }
 
 private extension CGFloat {

@@ -8,10 +8,21 @@
 
 import UIKit
 
-@objc public protocol OBCloseViewControllerBehaviorDelegate: OBBehaviorDelegate {
-    @objc optional func viewControllerWillClose(Behavior: OBCloseViewControllerBehavior) -> Void
-    @objc optional func viewControllerDidClose(Behavior: OBCloseViewControllerBehavior) -> Void
-    @objc optional func viewControllerCompletion() -> Void
+public protocol OBCloseViewControllerBehaviorDelegate: OBBehaviorDelegate {
+    func viewControllerWillClose(for behavior: OBCloseViewControllerBehavior)
+    func viewControllerDidClose(for behavior: OBCloseViewControllerBehavior)
+    func viewControllerCompletion()
+}
+
+public extension OBCloseViewControllerBehaviorDelegate {
+    func viewControllerWillClose(for behavior: OBCloseViewControllerBehavior) {
+    }
+    
+    func viewControllerDidClose(for behavior: OBCloseViewControllerBehavior) {
+    }
+    
+    func viewControllerCompletion() {
+    }
 }
 
 public protocol OBNavigationModalPresentationSegueDelegate {
@@ -33,17 +44,17 @@ public final class OBCloseViewControllerBehavior: OBBehavior {
     @IBAction public func closeViewController(sender: AnyObject?) {
         let closeDelegate: OBCloseViewControllerBehaviorDelegate? = getDelegate()
         
-        closeDelegate?.viewControllerWillClose?(Behavior: self)
+        closeDelegate?.viewControllerWillClose(for: self)
         
-        if let navigationController = self.owner?.navigationController, self.shouldPop {
+        if let navigationController = owner?.navigationController, shouldPop {
             navigationController.popViewController(animated: true)
-            closeDelegate?.viewControllerCompletion?()
+            closeDelegate?.viewControllerCompletion()
         }
         else {
-            self.owner?.dismiss(animated: true, completion: closeDelegate?.viewControllerCompletion)
+            owner?.dismiss(animated: true, completion: closeDelegate?.viewControllerCompletion)
         }
         
-        closeDelegate?.viewControllerDidClose?(Behavior: self)
+        closeDelegate?.viewControllerDidClose(for: self)
     }
     
     /**
@@ -52,15 +63,17 @@ public final class OBCloseViewControllerBehavior: OBBehavior {
      - parameter sender: UI element that instantated the close
      */
     @IBAction public func closeEnclosingViewController(sender: AnyObject?) {
-        if let navigationController = self.owner?.navigationController {
+        if let navigationController = owner?.navigationController {
             let closeDelegate: OBCloseViewControllerBehaviorDelegate? = getDelegate()
             let enclosingWindowDelegate = navigationController.enclosingWindowDelegate
             
-            closeDelegate?.viewControllerWillClose?(Behavior: self)
+            closeDelegate?.viewControllerWillClose(for: self)
             
-            enclosingWindowDelegate?.dismissModalPresentation(controller: navigationController, animated: true, completion: closeDelegate?.viewControllerCompletion)
+            enclosingWindowDelegate?.dismissModalPresentation(controller: navigationController,
+                                                              animated: true,
+                                                              completion: closeDelegate?.viewControllerCompletion)
 
-            closeDelegate?.viewControllerDidClose?(Behavior: self)
+            closeDelegate?.viewControllerDidClose(for: self)
         }
     }
 }
@@ -84,13 +97,16 @@ extension UIViewController: OBNavigationModalPresentationSegueDelegate {
         
         set {
             if let enclosingWindowDelegate = newValue {
-                objc_setAssociatedObject(self, &Constants.associatedKey, enclosingWindowDelegate as AnyObject, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+                objc_setAssociatedObject(self,
+                                         &Constants.associatedKey,
+                                         enclosingWindowDelegate as AnyObject,
+                                         .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             }
         }
     }
     
     @nonobjc
     public func dismissModalPresentation(controller: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        self.dismiss(animated: animated, completion: completion)
+        dismiss(animated: animated, completion: completion)
     }
 }

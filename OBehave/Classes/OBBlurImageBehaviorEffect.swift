@@ -185,7 +185,7 @@ extension UIImage {
         
         guard
             let outputContext = UIGraphicsGetCurrentContext(),
-            let inputImage = self.cgImage
+            let inputImage = cgImage
         else {
             return nil
         }
@@ -245,7 +245,7 @@ extension UIImage {
             return nil
         }
         
-        if self.cgImage == nil {
+        if cgImage == nil {
             return nil
         }
         
@@ -257,15 +257,15 @@ extension UIImage {
         let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > Constants.floatEpsilon
         
         let screenScale = UIScreen.main.scale
-        let imageRect = CGRect(origin: .zero, size: self.size)
+        let imageRect = CGRect(origin: .zero, size: size)
         var effectImage = self
         
         if hasBlur || hasSaturationChange {
-            guard let blurredAndSaturatedImage = self.blurAndSaturate(blurRadius: blurRadius,
-                                                                      saturationDeltaFactor: saturationDeltaFactor,
-                                                                      hasSaturationChange: hasSaturationChange,
-                                                                      imageRect: imageRect,
-                                                                      screenScale: screenScale)
+            guard let blurredAndSaturatedImage = blurAndSaturate(blurRadius: blurRadius,
+                                                                 saturationDeltaFactor: saturationDeltaFactor,
+                                                                 hasSaturationChange: hasSaturationChange,
+                                                                 imageRect: imageRect,
+                                                                 screenScale: screenScale)
             else {
                 return nil
             }
@@ -273,11 +273,11 @@ extension UIImage {
             effectImage = blurredAndSaturatedImage
         }
         
-        return self.outputImage(image: effectImage,
-                                maskImage: maskImage,
-                                hasBlur: hasBlur,
-                                tintColor: tintColor,
-                                screenScale: screenScale,
-                                imageRect: imageRect)
+        return outputImage(image: effectImage,
+                           maskImage: maskImage,
+                           hasBlur: hasBlur,
+                           tintColor: tintColor,
+                           screenScale: screenScale,
+                           imageRect: imageRect)
     }
 }

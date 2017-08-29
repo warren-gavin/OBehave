@@ -9,8 +9,8 @@
 import UIKit
 
 @available(iOS 10.0, *)
-class OBAnimateBlurOverlayBehavior: OBBehavior {
-    @IBOutlet var underlyingView: UIView! {
+public class OBAnimateBlurOverlayBehavior: OBBehavior {
+    @IBOutlet public var underlyingView: UIView! {
         didSet {
             underlyingView.addSubview(blurView)
             
@@ -41,7 +41,7 @@ class OBAnimateBlurOverlayBehavior: OBBehavior {
 
 // MARK: OBBehaviorSideEffectDelegate
 @available(iOS 10.0, *)
-extension OBAnimateBlurOverlayBehavior {
+public extension OBAnimateBlurOverlayBehavior {
     func setSideEffectProgress(_ progress: CGFloat) {
         blurProgress = progress
     }

@@ -46,12 +46,12 @@ open class OBBehavior: NSObject {
             objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             objc_setAssociatedObject(owner,    &self.associatedKey, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
-            var allBehaviors = objc_getAssociatedObject(self.owner, &Keys.allBehaviorsKey) as? [OBBehavior] ?? [OBBehavior]()
+            var allBehaviors = objc_getAssociatedObject(owner, &Keys.allBehaviorsKey) as? [OBBehavior] ?? [OBBehavior]()
             allBehaviors.append(self)
             
             objc_setAssociatedObject(owner, &Keys.allBehaviorsKey, allBehaviors, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
-            self.setup()
+            setup()
         }
     }
     
@@ -64,15 +64,10 @@ open class OBBehavior: NSObject {
     open func setup() {
         /*
          The behavior's data source and delegate can be set directly in the storyboard. If they are
-         not set in the storyboard we check to see if the owner supports the protocol and set them then
+         not set in the storyboard we set them to the owner, which is guaranteed to conform to the protocols
          */
-        if self.dataSource == nil {
-            self.dataSource = owner
-        }
-        
-        if self.delegate == nil {
-            self.delegate = owner
-        }
+        dataSource = dataSource ?? owner
+        delegate   = delegate   ?? owner
     }
     
     /**
@@ -85,7 +80,7 @@ open class OBBehavior: NSObject {
      - returns: The first data source we find that matches on the type
      */
     public func getDataSource<T>() -> T? {
-        return (self.dataSource as? T) ?? (self as? T)
+        return (dataSource as? T) ?? (self as? T)
     }
 
     /**
@@ -98,7 +93,7 @@ open class OBBehavior: NSObject {
      - returns: The first delegate we find that matches on the type
      */
     public func getDelegate<T>() -> T? {
-        return (self.delegate as? T) ?? (self as? T)
+        return (delegate as? T) ?? (self as? T)
     }
 }
 
@@ -124,7 +119,6 @@ open class OBBehavior: NSObject {
  *    Our Behavior's owner (see above) can conform to the Behavior data source and delegate protocols
  */
 extension UIViewController {
-    @objc(ob_allAssociatedBehaviors)
     func allAssociatedBehaviors() -> [OBBehavior]? {
         return objc_getAssociatedObject(self, &Keys.allBehaviorsKey) as? [OBBehavior]
     }
@@ -148,8 +142,7 @@ extension UIViewController {
     
     - returns: The result of the effect applied to the input object, e.g. a blurred image
     */
-    @objc(ob_performEffectOnObject:percentage:)
-    optional func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject?
+    @objc optional func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject?
 }
 
 /**

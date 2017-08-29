@@ -139,7 +139,7 @@ private extension UIView {
             return nil
         }
         
-        UIGraphicsBeginImageContextWithOptions(self.bounds.size, true, 0.0)
+        UIGraphicsBeginImageContextWithOptions(bounds.size, true, 0.0)
         defer {
             UIGraphicsEndImageContext()
         }

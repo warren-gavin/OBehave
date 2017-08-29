@@ -40,7 +40,7 @@ public class OBPageViewControllerBehavior: OBBehavior {
     
     func createPageControl() -> UIPageControl {
         let pageControl = UIPageControl(frame: .zero)
-        let dataSource: OBPageViewControllerBehaviorDataSource? = self.getDataSource()
+        let dataSource: OBPageViewControllerBehaviorDataSource? = getDataSource()
         
         pageControl.pageIndicatorTintColor = dataSource?.pageIndicatorTintColor
         pageControl.currentPageIndicatorTintColor = dataSource?.currentPageIndicatorTintColor
@@ -56,7 +56,7 @@ public class OBPageViewControllerBehavior: OBBehavior {
         return pageControl
     }
     
-    @IBInspectable var showPageControl: Bool = false {
+    @IBInspectable public var showPageControl: Bool = false {
         didSet {
             if showPageControl && pageControl == nil && pageViewController != nil {
                 pageControl = createPageControl()
@@ -68,9 +68,9 @@ public class OBPageViewControllerBehavior: OBBehavior {
         }
     }
     
-    @IBInspectable var showPageControlOnLast = false
+    @IBInspectable public var showPageControlOnLast = false
     
-    @IBOutlet var pageViewController: UIPageViewController! {
+    @IBOutlet public var pageViewController: UIPageViewController! {
         didSet {
             pageViewController.dataSource = self
             pageViewController.delegate   = self

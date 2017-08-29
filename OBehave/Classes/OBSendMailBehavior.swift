@@ -41,13 +41,13 @@ extension OBSendMailBehaviorDelegate {
 public class OBSendMailBehavior: OBBehavior {
     @IBAction public func showMail(_ sender: UIButton? = nil) {
         if !MFMailComposeViewController.canSendMail() {
-            let delegate: OBSendMailBehaviorDelegate? = self.getDelegate()
+            let delegate: OBSendMailBehaviorDelegate? = getDelegate()
             delegate?.unavailable(self)
             
             return
         }
         
-        guard let dataSource = self.dataSource as? OBSendMailBehaviorDataSource else {
+        guard let dataSource: OBSendMailBehaviorDataSource = getDataSource() else {
             return
         }
         
@@ -65,10 +65,10 @@ public class OBSendMailBehavior: OBBehavior {
         mailViewController.setToRecipients([dataSource.address(for: self)])
         mailViewController.mailComposeDelegate = self
         
-        self.owner?.present(mailViewController, animated: true, completion: {
+        owner?.present(mailViewController, animated: true) {
             let delegate: OBSendMailBehaviorDelegate? = self.getDelegate()
             delegate?.finished(presenting: self)
-        })
+        }
     }
 }
 

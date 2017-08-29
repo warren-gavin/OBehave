@@ -40,10 +40,12 @@ public class OBKeyboardObserverBehavior: OBBehavior {
     @IBOutlet public var view: UIView?
     @IBInspectable public var tapToDismiss: Bool = true
     
+    internal var locked = false
+
     // MARK: Private
     fileprivate var keyboardInfo: [String: NSValue]?
     
-    lazy private(set) public var tapGesture: UITapGestureRecognizer? = {
+    private(set) public lazy var tapGesture: UITapGestureRecognizer? = {
         if !self.tapToDismiss {
             return nil
         }
@@ -89,10 +91,10 @@ public class OBKeyboardObserverBehavior: OBBehavior {
     }
     
     public func endEditing() {
-        let delegate = self.delegate as? OBKeyboardObserverBehaviorDelegate
+        let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillDisappear(from: self)
         
-        self.owner?.view.endEditing(true)
+        owner?.view.endEditing(true)
         delegate?.keyboardDidDisappear(from: self)
     }
     
@@ -111,26 +113,25 @@ public class OBKeyboardObserverBehavior: OBBehavior {
      - parameter notification: Notification object
      */
     public func keyboardWillShow(_ notification: NSNotification) {
-        let delegate = self.delegate as? OBKeyboardObserverBehaviorDelegate
+        let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillAppear(from: self)
         
-        if self.tapToDismiss {
-            self.owner?.view.addGestureRecognizer(self.tapGesture!)
+        if tapToDismiss {
+            owner?.view.addGestureRecognizer(tapGesture!)
+        }
+        
+        let animation: (CGRect) -> Void = { rect in
+            if self.shouldAnimate() {
+                self.onKeyboardAppear(in: rect)
+            }
         }
 
-        self.animateAlongsideKeyboard(
-            keyboardInfo: notification.userInfo as? [String: NSValue],
-            animation: { rect in
-                if self.shouldAnimate() {
-                    self.onKeyboardAppear(in: rect)
-                }
-            },
-            completion: { (finished) -> Void in
-                if finished {
-                    delegate?.keyboardDidAppear(from: self)
-                }
+        animateAlongsideKeyboard(keyboardInfo: notification.userInfo as? [String: NSValue],
+                                 animation: animation) { (finished) -> Void in
+            if finished {
+                delegate?.keyboardDidAppear(from: self)
             }
-        )
+        }
     }
     
     /**
@@ -139,26 +140,27 @@ public class OBKeyboardObserverBehavior: OBBehavior {
      - parameter notification: Notification object
      */
     public func keyboardWillHide(_ notification: NSNotification) {
-        let delegate = self.delegate as? OBKeyboardObserverBehaviorDelegate
+        locked = false
+        
+        let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillAppear(from: self)
         
-        if self.tapToDismiss {
-            self.owner?.view.removeGestureRecognizer(self.tapGesture!)
+        if tapToDismiss {
+            owner?.view.removeGestureRecognizer(tapGesture!)
         }
         
-        self.animateAlongsideKeyboard(
-            keyboardInfo: notification.userInfo as? [String: NSValue],
-            animation: { rect in
-                if self.shouldAnimate() {
-                    self.onKeyboardDisappear(in: rect)
-                }
-            },
-            completion: { (finished) -> Void in
-                if finished {
-                    delegate?.keyboardDidDisappear(from: self)
-                }
+        let animation: (CGRect) -> Void = { rect in
+            if self.shouldAnimate() {
+                self.onKeyboardDisappear(in: rect)
             }
-        )
+        }
+        
+        animateAlongsideKeyboard(keyboardInfo: notification.userInfo as? [String: NSValue],
+                                 animation: animation) { (finished) -> Void in
+            if finished {
+                delegate?.keyboardDidDisappear(from: self)
+            }
+        }
     }
 }
 
@@ -171,11 +173,14 @@ private extension OBKeyboardObserverBehavior {
      - parameter completion:   Action on completion of the animations
      */
     func animateAlongsideKeyboard(keyboardInfo: [String: NSValue]?, animation: @escaping (CGRect) -> Void, completion: ((Bool) -> Void)?) {
-        guard let startFrame = keyboardInfo?[UIKeyboardFrameBeginUserInfoKey]?.cgRectValue,
+        guard
+            let startFrame = keyboardInfo?[UIKeyboardFrameBeginUserInfoKey]?.cgRectValue,
             var endFrame = keyboardInfo?[UIKeyboardFrameEndUserInfoKey]?.cgRectValue,
             let duration = keyboardInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-            let options = keyboardInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber else {
-                return
+            let options = keyboardInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber,
+            !locked
+        else {
+            return
         }
 
         self.keyboardInfo = keyboardInfo
@@ -193,14 +198,18 @@ private extension OBKeyboardObserverBehavior {
             self.view?.superview?.layoutIfNeeded()
         }
         
-        UIView.animate(withDuration: duration.doubleValue, delay: 0.0, options: animationCurve, animations: animateAndLayout, completion: completion)
+        UIView.animate(withDuration: duration.doubleValue,
+                       delay: 0.0,
+                       options: animationCurve,
+                       animations: animateAndLayout,
+                       completion: completion)
     }
     
     /**
      - return: Flag that controls if the Behavior should animate alongside the keyboard appearing and disappearing, default true
      */
     func shouldAnimate() -> Bool {
-        let delegate: OBKeyboardObserverBehaviorDelegate? = self.getDelegate()
+        let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         return delegate?.keyboardBehaviorShouldObserveKeyboard(from: self) ?? true
     }
 }

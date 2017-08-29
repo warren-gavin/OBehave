@@ -89,8 +89,8 @@ public class OBOverlayViewBehavior: OBBehavior {
             dimmingView.layoutIfNeeded()
         }
         
-        self.onscreen?.isActive  = false
-        self.offscreen?.isActive = true
+        onscreen?.isActive  = false
+        offscreen?.isActive = true
 
         UIView.animate(withDuration: .transitionDuration, animations: hideView) { [unowned self] _ in
             let hideDimmingView: () -> Void = {
@@ -157,17 +157,17 @@ private extension UIView {
     ///   - offset: Angle of the shadow displayed
     ///   - color: Shadow color
     @nonobjc func addShadow(color: UIColor = .darkGray) {
-        self.clipsToBounds       = false
-        self.layer.shadowColor   = color.cgColor
-        self.layer.shadowRadius  = .overlayShadowRadius
-        self.layer.shadowOpacity = .overlayShadowOpacity
-        self.layer.shadowOffset  = .overlayShadowOffset
+        clipsToBounds       = false
+        layer.shadowColor   = color.cgColor
+        layer.shadowRadius  = .overlayShadowRadius
+        layer.shadowOpacity = .overlayShadowOpacity
+        layer.shadowOffset  = .overlayShadowOffset
     }
     
     @nonobjc func removeShadow() {
-        self.layer.shadowRadius  = 0.0
-        self.layer.shadowOpacity = 0.0
-        self.layer.shadowOffset  = .zero
+        layer.shadowRadius  = 0.0
+        layer.shadowOpacity = 0.0
+        layer.shadowOffset  = .zero
     }
 }
 
