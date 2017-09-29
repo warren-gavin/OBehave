@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreImage
 
 class OBKenBurnsBehavior: OBBehavior {
     @IBOutlet public var kenBurnsView: OBKenBurnsView?
@@ -22,6 +23,14 @@ class OBKenBurnsBehavior: OBBehavior {
 
 @IBDesignable
 class OBKenBurnsView: UIView {
+    @IBInspectable public var detectFaces: Bool = false {
+        didSet {
+            applyToAllKenBurnsSubviews { subview in
+                subview.detectFaces = detectFaces
+            }
+        }
+    }
+    
     @IBInspectable public var image: UIImage! {
         didSet {
             addImageSubview(image)
@@ -160,7 +169,7 @@ private extension OBKenBurnsView {
             return
         }
         
-        let subview = OBKenBurnsSubview(maxZoom: maxZoom, minZoom: minZoom)
+        let subview = OBKenBurnsSubview(maxZoom: maxZoom, minZoom: minZoom, detectFaces: detectFaces)
         
         subview.image = image
         subview.panningSpeed = panningSpeed
@@ -223,6 +232,8 @@ private class OBKenBurnsSubview: UIScrollView {
     fileprivate var transitionTime: Double = .transitionTime
     fileprivate var pause: Double          = .pause
     
+    var detectFaces: Bool = false
+    
     var image: UIImage? {
         didSet {
             guard let image = image else {
@@ -234,7 +245,7 @@ private class OBKenBurnsSubview: UIScrollView {
             imageView = UIImageView(image: image)
             
             contentSize = image.size
-            setContentOffset(randomOffsetAtZoom(minimumZoomScale), animated: false)
+            setContentOffset(randomOffset(at: minimumZoomScale), animated: false)
         }
     }
     
@@ -251,48 +262,24 @@ private class OBKenBurnsSubview: UIScrollView {
         }
     }
     
-    fileprivate func randomOffsetAtZoom(_ zoom: CGFloat) -> CGPoint {
-        guard let window = UIApplication.shared.delegate?.window, let image = image else {
-            return CGPoint.zero
-        }
-        
-        let windowSize = window!.bounds.size
-        
-        let x = arc4random_uniform(UInt32(abs((image.size.width - windowSize.width) * zoom)))
-        let y = arc4random_uniform(UInt32(abs((image.size.height - windowSize.height) * zoom)))
-        
-        return CGPoint(x: CGFloat(x), y: CGFloat(y))
-    }
-    
-    fileprivate func toggledZoom() -> CGFloat {
-        zoomIn = !zoomIn
-        return (zoomIn ? maximumZoomScale : minimumZoomScale)
-    }
-    
-    fileprivate func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
-        return Double(sqrt(pow(contentOffset.x * zoom - point.x, 2) + pow(contentOffset.y * zoom - point.y, 2)))
-    }
-    
-    fileprivate func timeToReachPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
-        return min(distanceFromCenterToPoint(point, atZoom: zoom) / panningSpeed, .maximumPanningTime)
-    }
-    
-    convenience init(maxZoom: CGFloat, minZoom: CGFloat) {
+    convenience init(maxZoom: CGFloat, minZoom: CGFloat, detectFaces: Bool) {
         self.init()
         
-        maximumZoomScale = maxZoom
-        minimumZoomScale = minZoom
+        self.maximumZoomScale = maxZoom
+        self.minimumZoomScale = minZoom
+        self.detectFaces      = detectFaces
+        
         delegate         = self
     }
     
     @objc
     func startAnimating() {
         let zoom = toggledZoom()
-        let newOffset = randomOffsetAtZoom(zoom)
-        let duration = timeToReachPoint(newOffset, atZoom: zoom)
+        let offset = newOffset(zoom)
+        let duration = timeToReach(point: offset, atZoom: zoom)
         
         let move = { [unowned self] in
-            let rect = CGRect(origin: newOffset, size: CGSize(width: self.bounds.size.width / zoom, height: 1))
+            let rect = CGRect(origin: offset, size: CGSize(width: self.bounds.size.width / zoom, height: 1))
             
             self.zoom(to: rect, animated: false)
             
@@ -311,6 +298,51 @@ private class OBKenBurnsSubview: UIScrollView {
     
     func stopAnimating() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: .startAnimating, object: nil)
+    }
+}
+
+private extension OBKenBurnsSubview {
+    func newOffset(_ zoom: CGFloat) -> CGPoint {
+        guard let cgImage = image?.cgImage, detectFaces else {
+            return randomOffset(at: zoom)
+        }
+        
+        let options = [CIDetectorAccuracy: CIDetectorAccuracyHigh]
+        let detective = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: options)
+        
+        guard let features = detective?.features(in: CIImage(cgImage: cgImage)), !features.isEmpty else {
+            return randomOffset(at: zoom)
+        }
+        
+        let bounds = features[Int(arc4random_uniform(UInt32(features.count)))].bounds
+        return CGPoint(x: bounds.origin.x + bounds.size.width / 2,
+                       y: bounds.origin.y + bounds.size.height / 2)
+    }
+    
+    func randomOffset(at zoom: CGFloat) -> CGPoint {
+        guard let window = UIApplication.shared.delegate?.window, let image = image else {
+            return CGPoint.zero
+        }
+        
+        let windowSize = window!.bounds.size
+        
+        let x = arc4random_uniform(UInt32(abs((image.size.width - windowSize.width) * zoom)))
+        let y = arc4random_uniform(UInt32(abs((image.size.height - windowSize.height) * zoom)))
+        
+        return CGPoint(x: CGFloat(x), y: CGFloat(y))
+    }
+    
+    func toggledZoom() -> CGFloat {
+        zoomIn = !zoomIn
+        return (zoomIn ? maximumZoomScale : minimumZoomScale)
+    }
+    
+    func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
+        return Double(sqrt(pow(contentOffset.x * zoom - point.x, 2) + pow(contentOffset.y * zoom - point.y, 2)))
+    }
+    
+    func timeToReach(point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
+        return min(distanceFromCenterToPoint(point, atZoom: zoom) / panningSpeed, .maximumPanningTime)
     }
 }
 
