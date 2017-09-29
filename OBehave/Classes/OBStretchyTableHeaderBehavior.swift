@@ -21,6 +21,7 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
                 return
             }
             
+            headerImage = imageView?.image
             addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
         }
     }
@@ -113,7 +114,11 @@ private extension OBStretchyTableHeaderBehavior {
         
         let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + headerHeight) / maxEffectDistance))
         
-        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
+        let x = effect
+        let p = x?.performEffect(on: headerImage, percentage: percentage)
+        
+//        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
+        if let effectedImage = p as? UIImage {
             removeObserver(self, forKeyPath: .imageViewImage)
             imageView?.image = effectedImage
             addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)

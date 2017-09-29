@@ -17,6 +17,7 @@
 		B0111A171F55CE4900CA0418 /* OBehave.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0111A111F55CE1600CA0418 /* OBehave.framework */; };
 		B0111A581F55EA7600CA0418 /* BarCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0111A561F55EA7600CA0418 /* BarCodeScannerViewController.swift */; };
 		B0111A591F55EA7600CA0418 /* PhoneCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0111A571F55EA7600CA0418 /* PhoneCallViewController.swift */; };
+		B09EF27D1F7EB2D200DCD054 /* OBehave.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0111A111F55CE1600CA0418 /* OBehave.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,7 +49,28 @@
 			remoteGlobalIDString = B01119911F5572D200CA0418;
 			remoteInfo = OBehaveTests;
 		};
+		B09EF27E1F7EB2D200DCD054 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B0111A0B1F55CE1600CA0418 /* OBehave.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = B01119871F5572D200CA0418;
+			remoteInfo = OBehave;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B09EF2801F7EB2D300DCD054 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B09EF27D1F7EB2D200DCD054 /* OBehave.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		B01119DA1F55CE0400CA0418 /* OBehaveExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OBehaveExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -168,10 +190,12 @@
 				B01119D61F55CE0400CA0418 /* Sources */,
 				B01119D71F55CE0400CA0418 /* Frameworks */,
 				B01119D81F55CE0400CA0418 /* Resources */,
+				B09EF2801F7EB2D300DCD054 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B09EF27F1F7EB2D200DCD054 /* PBXTargetDependency */,
 			);
 			name = OBehaveExamples;
 			productName = OBehaveExamples;
@@ -354,6 +378,11 @@
 			target = B01119D91F55CE0400CA0418 /* OBehaveExamples */;
 			targetProxy = B01119FA1F55CE0400CA0418 /* PBXContainerItemProxy */;
 		};
+		B09EF27F1F7EB2D200DCD054 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OBehave;
+			targetProxy = B09EF27E1F7EB2D200DCD054 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -486,6 +515,7 @@
 		B0111A031F55CE0400CA0418 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8PKALBM6Q4;
 				INFOPLIST_FILE = OBehaveExamples/Info.plist;
@@ -500,6 +530,7 @@
 		B0111A041F55CE0400CA0418 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 8PKALBM6Q4;
 				INFOPLIST_FILE = OBehaveExamples/Info.plist;

@@ -21,9 +21,9 @@ class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavi
     }
     
     // MARK: UIViewControllerTransitioningDelegate
-    func presentationControllerForPresentedViewController(_ presented: UIViewController,
-                                                          presentingViewController presenting: UIViewController,
-                                                          sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                presenting: UIViewController?,
+                                source: UIViewController) -> UIPresentationController? {
         guard let owner = owner, owner == presented else {
             return nil
         }
