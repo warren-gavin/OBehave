@@ -16,7 +16,7 @@ class BarCodeScannerViewController: UIViewController {
         }
     }
     
-    fileprivate var displaying = false
+    private var displaying = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

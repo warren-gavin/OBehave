@@ -39,14 +39,14 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
     }
     
     // MARK: Private properties
-    fileprivate var headerHeight: CGFloat = 0 {
+    private var headerHeight: CGFloat = 0 {
         didSet {
             tableView?.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0)
             tableView?.contentOffset = CGPoint(x: 0, y: -headerHeight)
         }
     }
     
-    fileprivate var headerView: UIView? {
+    private var headerView: UIView? {
         didSet {
             guard let headerView = headerView, let tableView = tableView else {
                 return
@@ -61,7 +61,7 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
         }
     }
     
-    fileprivate var headerImage: UIImage?
+    private var headerImage: UIImage?
     
     // MARK: Public methods
     override public func observeValue(forKeyPath keyPath: String?,

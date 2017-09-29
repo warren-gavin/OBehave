@@ -38,6 +38,6 @@ class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavi
     }
 }
 
-fileprivate extension Int {
+private extension Int {
     static let defaultBlurStyle = UIBlurEffectStyle.dark.rawValue
 }

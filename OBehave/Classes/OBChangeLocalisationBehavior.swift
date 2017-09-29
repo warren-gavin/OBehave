@@ -102,8 +102,14 @@ extension Notification.Name {
 }
 
 private let swizzleLocalizationMethods: () = {
-    method_exchangeImplementations(class_getInstanceMethod(Bundle.self, .originalSelector),
-                                   class_getInstanceMethod(Bundle.self, .swizzledSelector))
+    guard
+        let originalMethod = class_getInstanceMethod(Bundle.self, .originalSelector),
+        let swizzledMethod = class_getInstanceMethod(Bundle.self, .swizzledSelector)
+    else {
+        return
+    }
+
+    method_exchangeImplementations(originalMethod, swizzledMethod)
 }()
 
 /**
@@ -118,7 +124,7 @@ extension Bundle {
     }
     
     // Swizzled implementation of the localization functionality
-    func swizzledLocalizedString(forKey key: String, value: String?, table tableName: String?) -> String {
+    @objc func swizzledLocalizedString(forKey key: String, value: String?, table tableName: String?) -> String {
         return Localization.currentBundle.swizzledLocalizedString(forKey: key, value: value, table: tableName)
     }
     

@@ -111,9 +111,9 @@ class OBKenBurnsView: UIView {
         }
     }
     
-    fileprivate var fadeInTimer: Timer?
+    private var fadeInTimer: Timer?
     
-    internal func fadeBetweenSubviews() {
+    @objc internal func fadeBetweenSubviews() {
         let kenBurnsSubviews = allKenBurnsSubviews
         
         if kenBurnsSubviews.count < 2 {
@@ -238,7 +238,7 @@ private class OBKenBurnsSubview: UIScrollView {
         }
     }
     
-    fileprivate var imageView: UIImageView? {
+    private var imageView: UIImageView? {
         didSet {
             guard let imageView = imageView else {
                 return
@@ -251,12 +251,14 @@ private class OBKenBurnsSubview: UIScrollView {
         }
     }
     
-    fileprivate func randomOffsetAtZoom(_ zoom: CGFloat) -> CGPoint {
-        guard let window = UIApplication.shared.delegate?.window, let image = image else {
+    private func randomOffsetAtZoom(_ zoom: CGFloat) -> CGPoint {
+        guard
+            let window = UIApplication.shared.delegate?.window,
+            let windowSize = window?.bounds.size,
+            let image = image
+        else {
             return CGPoint.zero
         }
-        
-        let windowSize = window!.bounds.size
         
         let x = arc4random_uniform(UInt32(abs((image.size.width - windowSize.width) * zoom)))
         let y = arc4random_uniform(UInt32(abs((image.size.height - windowSize.height) * zoom)))
@@ -264,16 +266,16 @@ private class OBKenBurnsSubview: UIScrollView {
         return CGPoint(x: CGFloat(x), y: CGFloat(y))
     }
     
-    fileprivate func toggledZoom() -> CGFloat {
+    private func toggledZoom() -> CGFloat {
         zoomIn = !zoomIn
         return (zoomIn ? maximumZoomScale : minimumZoomScale)
     }
     
-    fileprivate func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
+    private func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
         return Double(sqrt(pow(contentOffset.x * zoom - point.x, 2) + pow(contentOffset.y * zoom - point.y, 2)))
     }
     
-    fileprivate func timeToReachPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
+    private func timeToReachPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
         return min(distanceFromCenterToPoint(point, atZoom: zoom) / panningSpeed, .maximumPanningTime)
     }
     

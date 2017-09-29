@@ -31,7 +31,7 @@ extension OBInsetPresentationControllerDataSource {
 }
 
 public class OBInsetPresentationController: UIPresentationController {
-    fileprivate lazy var backgroundView: UIView? = {
+    private lazy var backgroundView: UIView? = {
         return self.backgroundViewForPresentation()
     }()
     

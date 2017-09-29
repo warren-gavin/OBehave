@@ -37,7 +37,7 @@ public class OBEmptyStateBehavior: OBBehavior {
         }
     }
     
-    fileprivate var dataSetView: DataSetView? {
+    private var dataSetView: DataSetView? {
         didSet {
             guard let displayingView = dataSetView?.view as? DataDisplaying else {
                 return
@@ -61,8 +61,14 @@ private extension OBEmptyStateBehavior {
         }
         
         zip(viewClassType.swizzledMethods, viewClassType.originalMethods).forEach {
-            method_exchangeImplementations(class_getInstanceMethod(viewClass, $0),
-                                           class_getInstanceMethod(viewClass, $1))
+            guard
+                let swizzledMethod = class_getInstanceMethod(Bundle.self, $0),
+                let originalMethod = class_getInstanceMethod(Bundle.self, $1)
+            else {
+                return
+            }
+            
+            method_exchangeImplementations(swizzledMethod, originalMethod)
         }
         
         viewClassType.isSwizzled = true

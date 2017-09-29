@@ -12,7 +12,7 @@ import MessageUI
 public protocol OBSendMailBehaviorDataSource: OBBehaviorDataSource {
     var textColor: UIColor { get }
     var barColor: UIColor { get }
-    var textAttributes: [String: Any]? { get }
+    var textAttributes: [NSAttributedStringKey: Any]? { get }
     
     func subject(for Behavior: OBSendMailBehavior) -> String
     func address(for Behavior: OBSendMailBehavior) -> String

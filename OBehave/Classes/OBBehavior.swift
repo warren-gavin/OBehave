@@ -43,15 +43,24 @@ open class OBBehavior: NSObject {
     @IBOutlet public var delegate: OBBehaviorDelegate?
     @IBOutlet public var owner: UIViewController? {
         didSet {
-            objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            objc_setAssociatedObject(owner,    &self.associatedKey, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            if let oldValue = oldValue {
+                objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+            
+            defer {
+                setup()
+            }
+            
+            guard let owner = owner else {
+                return
+            }
+            
+            objc_setAssociatedObject(owner, &self.associatedKey, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
             var allBehaviors = objc_getAssociatedObject(owner, &Keys.allBehaviorsKey) as? [OBBehavior] ?? [OBBehavior]()
             allBehaviors.append(self)
             
             objc_setAssociatedObject(owner, &Keys.allBehaviorsKey, allBehaviors, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            
-            setup()
         }
     }
     

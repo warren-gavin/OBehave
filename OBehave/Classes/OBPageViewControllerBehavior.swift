@@ -15,7 +15,7 @@ public protocol OBPageViewControllerBehaviorDataSource: OBBehaviorDataSource {
 }
 
 public class OBPageViewControllerBehavior: OBBehavior {
-    fileprivate lazy var viewControllers: [UIViewController] = {
+    private lazy var viewControllers: [UIViewController] = {
         guard let dataSource: OBPageViewControllerBehaviorDataSource = self.getDataSource() else {
             return []
         }
@@ -23,8 +23,8 @@ public class OBPageViewControllerBehavior: OBBehavior {
         return dataSource.controllers
     }()
     
-    fileprivate var pendingSelectedIndex = 0
-    fileprivate var selectedIndex = 0 {
+    private var pendingSelectedIndex = 0
+    private var selectedIndex = 0 {
         didSet {
             pageControl?.currentPage = selectedIndex
             
@@ -91,8 +91,8 @@ public class OBPageViewControllerBehavior: OBBehavior {
     public override func setup() {
         super.setup()
         
-        if pageViewController == nil && owner is UIPageViewController {
-            pageViewController = owner as! UIPageViewController
+        if let controller = owner as? UIPageViewController, pageViewController == nil {
+            pageViewController = controller
         }
     }
 }

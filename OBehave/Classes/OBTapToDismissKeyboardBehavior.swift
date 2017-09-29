@@ -27,14 +27,14 @@ class OBTapToDismissKeyboardBehavior: OBBehavior {
     }
     
     /// Gesture recogniser for the tap to dismiss the keyboard
-    fileprivate lazy var tapGesture: UITapGestureRecognizer = {
+    private lazy var tapGesture: UITapGestureRecognizer = {
         let gesture = UITapGestureRecognizer(target: self, action: .dismiss)
         gesture.cancelsTouchesInView = false
         
         return gesture
     }()
     
-    func dismissKeyboard(_: UITapGestureRecognizer) {
+    @objc func dismissKeyboard(_: UITapGestureRecognizer) {
         owner?.view.endEditing(true)
     }
 }
