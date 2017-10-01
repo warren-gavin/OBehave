@@ -15,9 +15,9 @@ class OBDimmedBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavio
     @IBInspectable public var dimmingColor: UIColor = .defaultDimmingColor
     
     // MARK: UIViewControllerTransitioningDelegate
-    func presentationControllerForPresentedViewController(_ presented: UIViewController,
-                                                          presentingViewController presenting: UIViewController,
-                                                          sourceViewController source: UIViewController) -> UIPresentationController? {
+    func presentationController(forPresented presented: UIViewController,
+                                presenting: UIViewController?,
+                                source: UIViewController) -> UIPresentationController? {
         guard let owner = owner, owner == presented else {
             return nil
         }
@@ -33,5 +33,5 @@ class OBDimmedBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavio
 }
 
 private extension UIColor {
-    static let defaultDimmingColor = UIColor.black.withAlphaComponent(0.6)
+    static let defaultDimmingColor = UIColor.black.withAlphaComponent(0.75)
 }

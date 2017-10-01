@@ -41,17 +41,17 @@ public class OBAnimatingViewBehavior: OBBehavior {
         executeAnimation(self)
     }
     
-    public func prepare(_ notification: Notification?) {
+    @objc public func prepare(_ notification: Notification?) {
         let delegate: OBAnimatingViewBehaviorDelegate? = getDelegate()
         delegate?.prepareForAnimation(self)
     }
     
-    public func execute(_ notification: Notification?) {
+    @objc public func execute(_ notification: Notification?) {
         let delegate: OBAnimatingViewBehaviorDelegate? = getDelegate()
         delegate?.executeAnimation(self)
     }
     
-    public func reverse(_ notification: Notification?) {
+    @objc public func reverse(_ notification: Notification?) {
         let delegate: OBAnimatingViewBehaviorDelegate? = getDelegate()
         delegate?.reverseAnimation(self)
     }
@@ -74,13 +74,13 @@ public class OBAnimatingViewBehavior: OBBehavior {
 }
 
 extension OBAnimatingViewBehavior: OBAnimatingViewBehaviorDelegate {
-    public func prepareForAnimation(_ behavior: OBAnimatingViewBehavior) {
+    @objc public func prepareForAnimation(_ behavior: OBAnimatingViewBehavior) {
     }
     
-    public func executeAnimation(_ behavior: OBAnimatingViewBehavior) {
+    @objc public func executeAnimation(_ behavior: OBAnimatingViewBehavior) {
     }
     
-    public func reverseAnimation(_ behavior: OBAnimatingViewBehavior) {
+    @objc public func reverseAnimation(_ behavior: OBAnimatingViewBehavior) {
     }
 }
 

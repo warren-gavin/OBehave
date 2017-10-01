@@ -21,6 +21,7 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
                 return
             }
             
+            headerImage = imageView?.image
             addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
         }
     }
@@ -39,14 +40,14 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
     }
     
     // MARK: Private properties
-    fileprivate var headerHeight: CGFloat = 0 {
+    private var headerHeight: CGFloat = 0 {
         didSet {
             tableView?.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0)
             tableView?.contentOffset = CGPoint(x: 0, y: -headerHeight)
         }
     }
     
-    fileprivate var headerView: UIView? {
+    private var headerView: UIView? {
         didSet {
             guard let headerView = headerView, let tableView = tableView else {
                 return
@@ -61,7 +62,7 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
         }
     }
     
-    fileprivate var headerImage: UIImage?
+    private var headerImage: UIImage?
     
     // MARK: Public methods
     override public func observeValue(forKeyPath keyPath: String?,
@@ -112,7 +113,11 @@ private extension OBStretchyTableHeaderBehavior {
         
         let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + headerHeight) / maxEffectDistance))
         
-        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
+        let x = effect
+        let p = x?.performEffect(on: headerImage, percentage: percentage)
+        
+//        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
+        if let effectedImage = p as? UIImage {
             removeObserver(self, forKeyPath: .imageViewImage)
             imageView?.image = effectedImage
             addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)

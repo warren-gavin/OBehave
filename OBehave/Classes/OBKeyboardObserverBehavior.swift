@@ -43,7 +43,7 @@ public class OBKeyboardObserverBehavior: OBBehavior {
     internal var locked = false
 
     // MARK: Private
-    fileprivate var keyboardInfo: [String: NSValue]?
+    private var keyboardInfo: [String: NSValue]?
     
     private(set) public lazy var tapGesture: UITapGestureRecognizer? = {
         if !self.tapToDismiss {
@@ -90,7 +90,7 @@ public class OBKeyboardObserverBehavior: OBBehavior {
     public func onKeyboardDisappear(in rect: CGRect) {
     }
     
-    public func endEditing() {
+    @objc public func endEditing() {
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillDisappear(from: self)
         
@@ -103,7 +103,7 @@ public class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter _: Gesture recogniser
      */
-    public func dismissKeyboard(_: UITapGestureRecognizer) {
+    @objc public func dismissKeyboard(_: UITapGestureRecognizer) {
         endEditing()
     }
 
@@ -112,12 +112,12 @@ public class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter notification: Notification object
      */
-    public func keyboardWillShow(_ notification: NSNotification) {
+    @objc public func keyboardWillShow(_ notification: NSNotification) {
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillAppear(from: self)
         
-        if tapToDismiss {
-            owner?.view.addGestureRecognizer(tapGesture!)
+        if let tapGesture = tapGesture {
+            owner?.view.addGestureRecognizer(tapGesture)
         }
         
         let animation: (CGRect) -> Void = { rect in
@@ -139,14 +139,14 @@ public class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter notification: Notification object
      */
-    public func keyboardWillHide(_ notification: NSNotification) {
+    @objc public func keyboardWillHide(_ notification: NSNotification) {
         locked = false
         
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillAppear(from: self)
         
-        if tapToDismiss {
-            owner?.view.removeGestureRecognizer(tapGesture!)
+        if let tapGesture = tapGesture {
+            owner?.view.removeGestureRecognizer(tapGesture)
         }
         
         let animation: (CGRect) -> Void = { rect in

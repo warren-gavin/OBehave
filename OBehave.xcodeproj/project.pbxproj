@@ -15,7 +15,6 @@
 		B01119B51F55730800CA0418 /* OBBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119A51F55730800CA0418 /* OBBehavior.swift */; };
 		B01119B61F55730800CA0418 /* OBBlurImageBehaviorEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119A61F55730800CA0418 /* OBBlurImageBehaviorEffect.swift */; };
 		B01119B71F55730800CA0418 /* OBCloseViewControllerBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119A71F55730800CA0418 /* OBCloseViewControllerBehavior.swift */; };
-		B01119B81F55730800CA0418 /* OBDimmedOverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119A81F55730800CA0418 /* OBDimmedOverlayViewController.swift */; };
 		B01119B91F55730800CA0418 /* OBEmptyStateBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119A91F55730800CA0418 /* OBEmptyStateBehavior.swift */; };
 		B01119BA1F55730800CA0418 /* OBInsetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119AA1F55730800CA0418 /* OBInsetPresentationController.swift */; };
 		B01119BB1F55730800CA0418 /* OBKeyboardObserverBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119AB1F55730800CA0418 /* OBKeyboardObserverBehavior.swift */; };
@@ -71,7 +70,6 @@
 		B01119A51F55730800CA0418 /* OBBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBBehavior.swift; path = Classes/OBBehavior.swift; sourceTree = "<group>"; };
 		B01119A61F55730800CA0418 /* OBBlurImageBehaviorEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBBlurImageBehaviorEffect.swift; path = Classes/OBBlurImageBehaviorEffect.swift; sourceTree = "<group>"; };
 		B01119A71F55730800CA0418 /* OBCloseViewControllerBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBCloseViewControllerBehavior.swift; path = Classes/OBCloseViewControllerBehavior.swift; sourceTree = "<group>"; };
-		B01119A81F55730800CA0418 /* OBDimmedOverlayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBDimmedOverlayViewController.swift; path = Classes/OBDimmedOverlayViewController.swift; sourceTree = "<group>"; };
 		B01119A91F55730800CA0418 /* OBEmptyStateBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBEmptyStateBehavior.swift; path = Classes/OBEmptyStateBehavior.swift; sourceTree = "<group>"; };
 		B01119AA1F55730800CA0418 /* OBInsetPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBInsetPresentationController.swift; path = Classes/OBInsetPresentationController.swift; sourceTree = "<group>"; };
 		B01119AB1F55730800CA0418 /* OBKeyboardObserverBehavior.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OBKeyboardObserverBehavior.swift; path = Classes/OBKeyboardObserverBehavior.swift; sourceTree = "<group>"; };
@@ -169,8 +167,8 @@
 				B0111A1A1F55D19900CA0418 /* Device */,
 				B0111A1B1F55D1A100CA0418 /* Effects */,
 				B0111A1D1F55D1B300CA0418 /* Images */,
-				B0111A1E1F55D1BA00CA0418 /* Keyboard */,
 				B0111A1F1F55D1C200CA0418 /* Presentation */,
+				B0111A1E1F55D1BA00CA0418 /* Keyboard */,
 				B0111A201F55D1CD00CA0418 /* Tables */,
 				B0111A211F55D1D100CA0418 /* Tools */,
 			);
@@ -270,7 +268,6 @@
 			isa = PBXGroup;
 			children = (
 				B0111A411F55D35700CA0418 /* OBBlurredBackgroundPresentationController.swift */,
-				B01119A81F55730800CA0418 /* OBDimmedOverlayViewController.swift */,
 				B0111A511F55DE2800CA0418 /* OBDimmedBackgroundPresentationController.swift */,
 				B01119AA1F55730800CA0418 /* OBInsetPresentationController.swift */,
 			);
@@ -334,18 +331,19 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0830;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = Apokrupto;
 				TargetAttributes = {
 					B01119871F5572D200CA0418 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 8PKALBM6Q4;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 					B01119901F5572D200CA0418 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 8PKALBM6Q4;
+						LastSwiftMigration = 0900;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -391,7 +389,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0111A521F55DE2800CA0418 /* OBDimmedBackgroundPresentationController.swift in Sources */,
-				B01119B81F55730800CA0418 /* OBDimmedOverlayViewController.swift in Sources */,
 				B01119BF1F55730800CA0418 /* OBShutterTransitionBehavior.swift in Sources */,
 				B01119B71F55730800CA0418 /* OBCloseViewControllerBehavior.swift in Sources */,
 				B0111A291F55D21D00CA0418 /* OBSaveImageBehavior.swift in Sources */,
@@ -459,7 +456,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -467,7 +466,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -513,7 +516,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -521,7 +526,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -567,7 +576,8 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -587,7 +597,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehave;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -600,7 +611,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -613,7 +625,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};

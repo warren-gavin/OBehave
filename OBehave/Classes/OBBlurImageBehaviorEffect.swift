@@ -9,17 +9,14 @@
 import UIKit
 import Accelerate
 
-final public class OBBlurImageBehaviorEffect: NSObject {
+final public class OBBlurImageBehaviorEffect: OBBehaviorEffect {
     @IBInspectable public var maxRadius: CGFloat = .maxRadius
     @IBInspectable public var saturation: CGFloat = .saturation
     @IBInspectable public var tintColor: UIColor?
-}
 
-// MARK: - OBBehaviorEffect
-extension OBBlurImageBehaviorEffect {
-    public func performEffect(on object: AnyObject?, percentage percent: CGFloat) -> AnyObject? {
+    override public func performEffect(on object: AnyObject?, percentage percent: CGFloat) -> AnyObject? {
         guard let image = object as? UIImage, percent > 0 else {
-            return object
+            return super.performEffect(on: object, percentage: percent)
         }
         
         return image.applyBlur(withRadius: percent * maxRadius,
@@ -40,10 +37,10 @@ extension UIBlurEffectStyle {
         case .extraLight:
             return UIColor(white: 0.97, alpha: 0.82)
             
-        case .dark:
+        case .dark, .extraDark:
             return UIColor(white: 0.11, alpha: 0.73)
 
-        default:
+        case .light, .prominent, .regular:
             return UIColor(white: 1.0, alpha: 0.3)
         }
     }
@@ -53,7 +50,7 @@ extension UIBlurEffectStyle {
         case .light, .prominent, .regular:
             return 30.0
             
-        default:
+        case .extraLight, .dark, .extraDark:
             return 20.0
         }
     }
@@ -185,7 +182,7 @@ extension UIImage {
         
         guard
             let outputContext = UIGraphicsGetCurrentContext(),
-            let inputImage = cgImage
+            let inputImage = image.cgImage
         else {
             return nil
         }

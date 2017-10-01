@@ -26,10 +26,10 @@ public class OBOverlayViewBehavior: OBBehavior {
         }
     }
     
-    fileprivate var dimmingView: UIView?
-    fileprivate var offscreen: NSLayoutConstraint?
-    fileprivate var onscreen:  NSLayoutConstraint?
-    fileprivate var direction: OverlayTransitionDirection = .bottom
+    private var dimmingView: UIView?
+    private var offscreen: NSLayoutConstraint?
+    private var onscreen:  NSLayoutConstraint?
+    private var direction: OverlayTransitionDirection = .bottom
     
     public var isDisplaying: Bool {
         return dimmingView != nil

@@ -34,9 +34,9 @@ class OBSaveImageBehavior: OBBehavior, OBSaveImageBehaviorDataSource {
         }
     }
     
-    fileprivate lazy var gesture = UILongPressGestureRecognizer(target: self, action: .saveOnLongPress)
+    private lazy var gesture = UILongPressGestureRecognizer(target: self, action: .saveOnLongPress)
     
-    func saveOnLongPress(_ gesture: UIGestureRecognizer) {
+    @objc func saveOnLongPress(_ gesture: UIGestureRecognizer) {
         if gesture.state == .began {
             saveImage(nil)
         }

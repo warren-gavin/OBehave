@@ -55,7 +55,7 @@ extension OBTransitionDelegateBehaviorDataSource {
 /// the animatePresentation(using:completion:) and animateDismissal(using:completion:)
 /// methods to implement the exact type of transition needed
 public class OBTransitionDelegateBehavior: OBBehavior, UIViewControllerTransitioningDelegate {
-    fileprivate var isPresenting = true
+    private var isPresenting = true
     
     override public func setup() {
         super.setup()

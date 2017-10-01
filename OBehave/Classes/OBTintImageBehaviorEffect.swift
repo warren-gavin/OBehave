@@ -8,10 +8,10 @@
 
 import UIKit
 
-class OBTintImageBehaviorEffect: NSObject {
+final public class OBTintImageBehaviorEffect: OBBehaviorEffect {
     @IBInspectable public var tintColor: UIColor?
     
-    func performEffectOnObject(_ object: AnyObject?, percentage percent: CGFloat) -> AnyObject? {
+    override func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject? {
         guard let image = object as? UIImage, let tintColor = tintColor, percent > 0 else {
             return object
         }

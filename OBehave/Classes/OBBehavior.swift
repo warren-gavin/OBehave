@@ -43,15 +43,24 @@ open class OBBehavior: NSObject {
     @IBOutlet public weak var delegate: OBBehaviorDelegate?
     @IBOutlet public weak var owner: UIViewController? {
         didSet {
-            objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            objc_setAssociatedObject(owner,    &self.associatedKey, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            if let oldValue = oldValue {
+                objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            }
+            
+            defer {
+                setup()
+            }
+            
+            guard let owner = owner else {
+                return
+            }
+            
+            objc_setAssociatedObject(owner, &self.associatedKey, self, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
             
             var allBehaviors = objc_getAssociatedObject(owner, &Keys.allBehaviorsKey) as? [OBBehavior] ?? [OBBehavior]()
             allBehaviors.append(self)
             
             objc_setAssociatedObject(owner, &Keys.allBehaviorsKey, allBehaviors, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
-            
-            setup()
         }
     }
     
@@ -132,7 +141,7 @@ extension UIViewController {
  *    Behavior itself, instead the full experience as shown on screen is a combination of the Behavior plus
  *    side effect objects working together
  */
-@objc public protocol OBBehaviorEffect {
+public class OBBehaviorEffect: NSObject {
     /**
     Perform the side effect on an object. This can be anything we want
     
@@ -142,12 +151,14 @@ extension UIViewController {
     
     - returns: The result of the effect applied to the input object, e.g. a blurred image
     */
-    @objc optional func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject?
+    func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject? {
+        return object
+    }
 }
 
 /**
  *    Extend NSObject for effects. We need this because the effect will be hooked up in Interface Builder and so
  *    must be an NSObject.
  */
-extension NSObject: OBBehaviorDataSource, OBBehaviorEffect, OBBehaviorDelegate {
+extension NSObject: OBBehaviorDataSource, OBBehaviorDelegate {
 }

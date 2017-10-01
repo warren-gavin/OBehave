@@ -58,11 +58,9 @@ private extension OBSlideInFromEdgeViewBehavior {
             return nil
         }
         
-        let viewConstraintsOnly = { (constraint: NSLayoutConstraint) -> Bool in
-            constraint.firstItem as! NSObject == view || constraint.secondItem as! NSObject == view
+        return constraints.filter { (constraint: NSLayoutConstraint) -> Bool in
+            constraint.firstItem as? NSObject == view || constraint.secondItem as? NSObject == view
         }
-        
-        return constraints.filter(viewConstraintsOnly)
     }
     
     func makeViewsHidden(_ hidden: Bool, animated: Bool) {

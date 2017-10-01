@@ -21,29 +21,29 @@ final public class OBBarCodeScannerBehavior: OBBehavior {
         }
     }
     
-    fileprivate let supportedBarCodes = [
-        AVMetadataObjectTypeUPCECode,
-        AVMetadataObjectTypeCode39Code,
-        AVMetadataObjectTypeCode39Mod43Code,
-        AVMetadataObjectTypeEAN13Code,
-        AVMetadataObjectTypeEAN8Code,
-        AVMetadataObjectTypeCode93Code,
-        AVMetadataObjectTypeCode128Code,
-        AVMetadataObjectTypePDF417Code,
-        AVMetadataObjectTypeQRCode,
-        AVMetadataObjectTypeAztecCode,
-        AVMetadataObjectTypeDataMatrixCode
+    private let supportedBarCodes: [AVMetadataObject.ObjectType] = [
+        .upce,
+        .code39,
+        .code39Mod43,
+        .ean13,
+        .ean8,
+        .code93,
+        .code128,
+        .pdf417,
+        .qr,
+        .aztec,
+        .dataMatrix
     ]
     
-    fileprivate lazy var session: AVCaptureSession = {
+    private lazy var session: AVCaptureSession = {
         return AVCaptureSession()
     }()
     
-    fileprivate lazy var cameraPreviewLayer: AVCaptureVideoPreviewLayer = {
+    private lazy var cameraPreviewLayer: AVCaptureVideoPreviewLayer = {
         var layer = AVCaptureVideoPreviewLayer(session: self.session)
-        layer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
-        return layer!
+        return layer
     }()
     
     // MARK: Public
@@ -76,9 +76,10 @@ private extension OBBarCodeScannerBehavior {
     }
     
     func setupBarCodeScanner() {
-        let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
-        
-        guard let input = try? AVCaptureDeviceInput(device: device) else {
+        guard
+            let device = AVCaptureDevice.default(for: AVMediaType.video),
+            let input = try? AVCaptureDeviceInput(device: device)
+        else {
             let delegate: OBBarCodeScannerBehaviorDelegate? = getDelegate()
             delegate?.barCodeScanner(self, didFailWithError: nil)
             
@@ -99,15 +100,17 @@ private extension OBBarCodeScannerBehavior {
 
 // MARK: AVCaptureMetadataOutputObjectsDelegate
 extension OBBarCodeScannerBehavior: AVCaptureMetadataOutputObjectsDelegate {
-    public func captureOutput(_ captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [Any]!, from connection: AVCaptureConnection!) {
+    public func metadataOutput(captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         var barCodeBounds = CGRect.zero
         var barCodeString = ""
         
-        for metadata in metadataObjects as! [AVMetadataObject] {
+        for metadata in metadataObjects {
             for type in supportedBarCodes {
-                if metadata.type == type {
-                    barCodeBounds = cameraPreviewLayer.transformedMetadataObject(for: metadata).bounds
-                    barCodeString = (metadata as! AVMetadataMachineReadableCodeObject).stringValue
+                if metadata.type == type,
+                   let bounds = cameraPreviewLayer.transformedMetadataObject(for: metadata)?.bounds,
+                   let stringValue = (metadata as? AVMetadataMachineReadableCodeObject)?.stringValue {
+                    barCodeBounds = bounds
+                    barCodeString = stringValue
                     break
                 }
             }
