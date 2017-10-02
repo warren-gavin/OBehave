@@ -209,14 +209,12 @@ extension UITableView: DataDisplaying {
         return numberOfRows
     }
     
-    @objc
-    func ob_reloadData() {
+    @objc func ob_reloadData() {
         showEmptyState = isEmpty
         return ob_reloadData()
     }
     
-    @objc
-    func ob_endUpdates() {
+    @objc func ob_endUpdates() {
         showEmptyState = isEmpty
         return ob_endUpdates()
     }
@@ -237,8 +235,7 @@ extension UICollectionView: DataDisplaying {
         return numberOfItems
     }
     
-    @objc
-    func ob_reloadData() {
+    @objc func ob_reloadData() {
         defer {
             showEmptyState = isEmpty
         }
@@ -246,8 +243,7 @@ extension UICollectionView: DataDisplaying {
         return ob_reloadData()
     }
     
-    @objc
-    func ob_performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
+    @objc func ob_performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
         return ob_performBatchUpdates(updates) { ok in
             completion?(ok)
             self.showEmptyState = self.isEmpty

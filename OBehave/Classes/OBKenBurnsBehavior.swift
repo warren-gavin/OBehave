@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreImage
 
 class OBKenBurnsBehavior: OBBehavior {
     @IBOutlet public var kenBurnsView: OBKenBurnsView?
@@ -22,6 +23,18 @@ class OBKenBurnsBehavior: OBBehavior {
 
 @IBDesignable
 class OBKenBurnsView: UIView {
+    @IBInspectable public var faceDetection: Bool = false {
+        didSet {
+            allKenBurnsSubviews.forEach { $0.detectFaces = faceDetection }
+        }
+    }
+    
+    @IBInspectable public var faceHighAccuracy: Bool = false {
+        didSet {
+            allKenBurnsSubviews.forEach { $0.accurateFaceDetection = faceHighAccuracy }
+        }
+    }
+    
     @IBInspectable public var image: UIImage! {
         didSet {
             addImageSubview(image)
@@ -48,10 +61,7 @@ class OBKenBurnsView: UIView {
     
     @IBInspectable public var panningSpeed: Double = .panningSpeed {
         didSet {
-            applyToAllKenBurnsSubviews { subview in
-                subview.panningSpeed = panningSpeed
-            }
-            
+            allKenBurnsSubviews.forEach { $0.panningSpeed = panningSpeed }
             resetAnimation()
         }
     }
@@ -64,38 +74,27 @@ class OBKenBurnsView: UIView {
     
     @IBInspectable public var transitionTime: Double = .transitionTime {
         didSet {
-            applyToAllKenBurnsSubviews { subview in
-                subview.transitionTime = transitionTime
-            }
-            
+            allKenBurnsSubviews.forEach { $0.transitionTime = transitionTime }
             resetAnimation()
         }
     }
     
     @IBInspectable public var pause: Double = .pause {
         didSet {
-            applyToAllKenBurnsSubviews { subview in
-                subview.pause = pause
-            }
+            allKenBurnsSubviews.forEach { $0.pause = pause }
         }
     }
     
     @IBInspectable public var maxZoom: CGFloat = .maxZoom {
         didSet {
-            applyToAllKenBurnsSubviews { subview in
-                subview.maximumZoomScale = maxZoom
-            }
-            
+            allKenBurnsSubviews.forEach { $0.maximumZoomScale = maxZoom }
             resetAnimation()
         }
     }
     
     @IBInspectable public var minZoom: CGFloat = .minZoom {
         didSet {
-            applyToAllKenBurnsSubviews { subview in
-                subview.minimumZoomScale = minZoom
-            }
-            
+            allKenBurnsSubviews.forEach { $0.minimumZoomScale = minZoom }
             resetAnimation()
         }
     }
@@ -150,9 +149,7 @@ class OBKenBurnsView: UIView {
 
 private extension OBKenBurnsView {
     var allKenBurnsSubviews: [OBKenBurnsSubview] {
-        return subviews.flatMap {
-            $0 as? OBKenBurnsSubview
-        }
+        return subviews.flatMap { $0 as? OBKenBurnsSubview }
     }
     
     func addImageSubview(_ image: UIImage?) {
@@ -160,12 +157,13 @@ private extension OBKenBurnsView {
             return
         }
         
-        let subview = OBKenBurnsSubview(maxZoom: maxZoom, minZoom: minZoom)
+        let subview = OBKenBurnsSubview(maxZoom: maxZoom, minZoom: minZoom, detectFaces: faceDetection)
         
         subview.image = image
         subview.panningSpeed = panningSpeed
         subview.transitionTime = transitionTime
         subview.pause = pause
+        subview.accurateFaceDetection = faceHighAccuracy
         
         subview.translatesAutoresizingMaskIntoConstraints = false
         addSubview(subview)
@@ -192,30 +190,20 @@ private extension OBKenBurnsView {
     
     func startAnimating() {
         if !animating {
-            applyToAllKenBurnsSubviews { subview in
-                subview.startAnimating()
-            }
-            
+            allKenBurnsSubviews.forEach { $0.startAnimating() }
             fadeBetweenSubviews()
         }
     }
     
     func stopAnimating() {
         if animating {
-            applyToAllKenBurnsSubviews { subview in
-                subview.stopAnimating()
-            }
-            
+            allKenBurnsSubviews.forEach { $0.stopAnimating() }
+ 
             fadeInTimer?.invalidate()
             fadeInTimer = nil
         }
     }
-    
-    func applyToAllKenBurnsSubviews(_ applyToSubview: ((OBKenBurnsSubview) -> Void)) {
-        allKenBurnsSubviews.forEach { applyToSubview($0) }
-    }
 }
-
 
 private class OBKenBurnsSubview: UIScrollView {
     fileprivate var zoomIn: Bool           = false
@@ -223,10 +211,14 @@ private class OBKenBurnsSubview: UIScrollView {
     fileprivate var transitionTime: Double = .transitionTime
     fileprivate var pause: Double          = .pause
     
+    var detectFaces: Bool = false
+    var accurateFaceDetection = false
+    
     var image: UIImage? {
         didSet {
+            imageView?.removeFromSuperview()
+
             guard let image = image else {
-                imageView?.removeFromSuperview()
                 imageView = nil
                 return
             }
@@ -234,8 +226,45 @@ private class OBKenBurnsSubview: UIScrollView {
             imageView = UIImageView(image: image)
             
             contentSize = image.size
-            setContentOffset(randomOffsetAtZoom(minimumZoomScale), animated: false)
+            setContentOffset(randomOffset(at: minimumZoomScale), animated: false)
         }
+    }
+    
+    private var _faces: [CGRect]?
+    
+    func detectFaces(completion: ([CGRect]) -> Void) {
+        if !detectFaces {
+            completion([])
+            return
+        }
+        
+        if let faces = _faces {
+            completion(faces)
+            return
+        }
+        
+        let options = [CIDetectorAccuracy: (accurateFaceDetection ? CIDetectorAccuracyHigh : CIDetectorAccuracyLow)]
+        
+        guard
+            let cgImage = image?.cgImage,
+            let scale = image?.scale,
+            let detective = CIDetector(ofType: CIDetectorTypeFace, context: nil, options: options)
+        else {
+            completion([])
+            return
+        }
+        
+        _faces = detective
+            .features(in: CIImage(cgImage: cgImage))
+            .map {
+                CGRect(x: $0.bounds.origin.x,
+                       y: CGFloat(cgImage.height) - $0.bounds.origin.y - $0.bounds.size.height,
+                       width: $0.bounds.size.width,
+                       height: $0.bounds.size.height)
+                    .applying(CGAffineTransform(scaleX: 1 / scale, y: 1 / scale))
+            }
+        
+        return completion(_faces!)
     }
     
     private var imageView: UIImageView? {
@@ -251,7 +280,66 @@ private class OBKenBurnsSubview: UIScrollView {
         }
     }
     
-    private func randomOffsetAtZoom(_ zoom: CGFloat) -> CGPoint {
+    convenience init(maxZoom: CGFloat, minZoom: CGFloat, detectFaces: Bool) {
+        self.init()
+        
+        self.maximumZoomScale = maxZoom
+        self.minimumZoomScale = minZoom
+        self.detectFaces      = detectFaces
+        
+        delegate = self
+    }
+    
+    @objc func startAnimating() {
+        let zoom = toggledZoom()
+        
+        newOffset(zoom) { offset in
+            let duration = self.timeToReach(point: offset, atZoom: zoom)
+            
+            let move = { [unowned self] in
+                let rect = CGRect(origin: offset, size: CGSize(width: self.bounds.size.width / zoom, height: 1))
+                self.zoom(to: rect, animated: false)
+                
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64((self.pause + duration) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) { [unowned self] in
+                    self.startAnimating()
+                }
+            }
+            
+            UIView.animate(withDuration: duration,
+                           delay: .animationDelay,
+                           options: .beginFromCurrentState,
+                           animations: move,
+                           completion: nil)
+        }
+    }
+    
+    func stopAnimating() {
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: .startAnimating, object: nil)
+    }
+}
+
+private extension OBKenBurnsSubview {
+    func newOffset(_ zoom: CGFloat, completion: @escaping (CGPoint) -> Void) {
+        DispatchQueue.global(qos: .background).async { [unowned self] in
+            self.detectFaces { faces in
+                guard !faces.isEmpty else {
+                    DispatchQueue.main.async { [unowned self] in
+                        completion(self.randomOffset(at: zoom))
+                    }
+                    return
+                }
+                
+                let index = Int(arc4random_uniform(UInt32(faces.count)))
+                let bounds = faces[index]
+                
+                DispatchQueue.main.async {
+                    completion(bounds.origin)
+                }
+            }
+        }
+    }
+    
+    func randomOffset(at zoom: CGFloat) -> CGPoint {
         guard
             let window = UIApplication.shared.delegate?.window,
             let windowSize = window?.bounds.size,
@@ -265,61 +353,24 @@ private class OBKenBurnsSubview: UIScrollView {
         
         return CGPoint(x: CGFloat(x), y: CGFloat(y))
     }
-    
-    private func toggledZoom() -> CGFloat {
+
+    func toggledZoom() -> CGFloat {
         zoomIn = !zoomIn
         return (zoomIn ? maximumZoomScale : minimumZoomScale)
     }
     
-    private func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
+    func distanceFromCenterToPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> Double {
         return Double(sqrt(pow(contentOffset.x * zoom - point.x, 2) + pow(contentOffset.y * zoom - point.y, 2)))
     }
     
-    private func timeToReachPoint(_ point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
-        return min(distanceFromCenterToPoint(point, atZoom: zoom) / panningSpeed, .maximumPanningTime)
-    }
-    
-    convenience init(maxZoom: CGFloat, minZoom: CGFloat) {
-        self.init()
-        
-        maximumZoomScale = maxZoom
-        minimumZoomScale = minZoom
-        delegate         = self
-    }
-    
-    @objc
-    func startAnimating() {
-        let zoom = toggledZoom()
-        let newOffset = randomOffsetAtZoom(zoom)
-        let duration = timeToReachPoint(newOffset, atZoom: zoom)
-        
-        let move = { [unowned self] in
-            let rect = CGRect(origin: newOffset, size: CGSize(width: self.bounds.size.width / zoom, height: 1))
-            
-            self.zoom(to: rect, animated: false)
-            
-            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64((self.pause + duration) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) {
-                self.startAnimating()
-            }
-        }
-        
-        UIView.animate(withDuration: duration,
-                       delay: .animationDelay,
-                       options: .beginFromCurrentState,
-                       animations: move,
-                       completion: nil
-        )
-    }
-    
-    func stopAnimating() {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: .startAnimating, object: nil)
+    func timeToReach(point: CGPoint, atZoom zoom: CGFloat) -> TimeInterval {
+        return min(distanceFromCenterToPoint(point, atZoom: zoom) / panningSpeed, .maxPanningTime)
     }
 }
 
 // MARK: UIScrollViewDelegate
 extension OBKenBurnsSubview: UIScrollViewDelegate {
-    @objc
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+    @objc func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
 }
@@ -330,12 +381,12 @@ private extension Selector {
 }
 
 private extension Double {
-    static let panningSpeed = 3.0
+    static let panningSpeed   = 3.0
     static let animationDelay = 0.0
-    static let sceneDuration = 10.0
+    static let sceneDuration  = 10.0
     static let transitionTime = 3.0
-    static let pause = 2.0
-    static let maximumPanningTime = 20.0
+    static let pause          = 1.0
+    static let maxPanningTime = 20.0
 }
 
 private extension CGFloat {

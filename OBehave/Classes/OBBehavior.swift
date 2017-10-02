@@ -39,9 +39,9 @@ open class OBBehavior: NSObject {
     
     // MARK: Outlets
     @IBOutlet public var effect: OBBehaviorEffect?
-    @IBOutlet public var dataSource: OBBehaviorDataSource?
-    @IBOutlet public var delegate: OBBehaviorDelegate?
-    @IBOutlet public var owner: UIViewController? {
+    @IBOutlet public weak var dataSource: OBBehaviorDataSource?
+    @IBOutlet public weak var delegate: OBBehaviorDelegate?
+    @IBOutlet public weak var owner: UIViewController? {
         didSet {
             if let oldValue = oldValue {
                 objc_setAssociatedObject(oldValue, &self.associatedKey, nil,  .OBJC_ASSOCIATION_RETAIN_NONATOMIC)

@@ -90,7 +90,6 @@ public class OBStretchyTableHeaderBehavior: OBBehavior {
     }
     
     deinit {
-        removeObserver(self, forKeyPath: .tableViewFrame)
         removeObserver(self, forKeyPath: .tableViewBounds)
         removeObserver(self, forKeyPath: .imageViewImage)
     }
