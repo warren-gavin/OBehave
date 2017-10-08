@@ -1,5 +1,5 @@
 //
-//  OBShutterTransitionBehavior.swift
+//  OBShutterTransitionDelegateBehavior.swift
 //  OBehave
 //
 //  Created by Warren Gavin on 20/01/2016.
@@ -9,14 +9,14 @@
 import UIKit
 
 /// Shutter settings
-public protocol OBShutterTransitionBehaviorDataSource: OBTransitionDelegateBehaviorDataSource {
+public protocol OBShutterTransitionDelegateBehaviorDataSource: OBTransitionDelegateBehaviorDataSource {
     var topHeight: CGFloat { get }
 }
 
 // The shutter presentation splits the displayed view in two and initialises
 // the two views offscreen. The transition animates the top and bottom views
 // coming together, as they combine to create the presented view
-public class OBShutterTransitionBehavior: OBTransitionDelegateBehavior {
+public class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBehavior {
     private var topView: UIImageView?
     private var bottomView: UIImageView?
     private var subviews: [UIView]?
@@ -28,7 +28,7 @@ public class OBShutterTransitionBehavior: OBTransitionDelegateBehavior {
             return nil
         }
         
-        let dataSource: OBShutterTransitionBehaviorDataSource? = getDataSource()
+        let dataSource: OBShutterTransitionDelegateBehaviorDataSource? = getDataSource()
         let height = dataSource?.topHeight ?? .defaultTopHeight
         
         (topView, bottomView) = split(view: presentedView, at: height)
@@ -86,7 +86,7 @@ public class OBShutterTransitionBehavior: OBTransitionDelegateBehavior {
             return nil
         }
         
-        let dataSource: OBShutterTransitionBehaviorDataSource? = getDataSource()
+        let dataSource: OBShutterTransitionDelegateBehaviorDataSource? = getDataSource()
         let height = dataSource?.topHeight ?? .defaultTopHeight
         
         let (topView, bottomView) = split(view: presentingView, at: height)
@@ -120,7 +120,7 @@ public class OBShutterTransitionBehavior: OBTransitionDelegateBehavior {
     }
 }
 
-private extension OBShutterTransitionBehavior {
+private extension OBShutterTransitionDelegateBehavior {
     func split(view: UIView, at height: CGFloat) -> (UIImageView?, UIImageView?) {
         let frames = (top: CGRect(origin: .zero, size: CGSize(width: view.bounds.size.width, height: height)),
                       bottom: CGRect(origin: CGPoint(x: 0, y: height), size: CGSize(width: view.bounds.size.width,

@@ -1,5 +1,5 @@
 //
-//  OBChangeLocalisationBehavior.swift
+//  OBChangeLocalizationBehavior.swift
 //  OBehave
 //
 //  Created by Warren Gavin on 26/11/15.
