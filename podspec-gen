@@ -4,12 +4,17 @@ IFS='%'
 PROJECT=OBehave
 PODSPEC=$PROJECT.podspec
 SRC_ROOT=$PROJECT/Classes
-cd $SRC_ROOT
 
 generated_subspec=""
 
+## Generate a subspec output
+## $1 - Directory in which to look for subdirectories
+## $2 - Spec name, initially this is the standard 's', in subspecs it is the directory name
+## $3 - Indentation.
+## $4 - Separator between subspecs, like a newline (optional)
 function create_subspec() {
   for file in "$1"/*; do
+    # Only make subspecs from directories
     if [ -d "$file" ] ; then
       generated_subspec+="$4"
       dir=`dirname $file`
@@ -19,23 +24,29 @@ function create_subspec() {
 
       generated_subspec+="$3$2.subspec '$base' do |$subspec|\n"
 
+      # Only add source_files if the directory contains files
       if [ ! -z `ls -p $file | grep -v /` ]; then
         generated_subspec+="$3  $subspec.source_files = '${srcpath/.\//}'\n"
       fi
 
+      # Recurse to make child subspecs
       create_subspec $file $subspec "  $3"
       generated_subspec+="$3end\n"
     fi
   done
 }
 
+cd $SRC_ROOT
 create_subspec . "s" "  " "\n"
 
 cd - > /dev/null
 
+echo "Generating podspec..."
 TEMPLATE=`cat $PODSPEC.template`
 TEMPLATE=${TEMPLATE/__VERSION__/$1}
 TEMPLATE=${TEMPLATE/__SUBSPECS__/$generated_subspec}
 
 echo $TEMPLATE > $PODSPEC
+
+echo "Linting podspec..."
 pod spec lint $PODSPEC
