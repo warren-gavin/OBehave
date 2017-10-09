@@ -1,0 +1,41 @@
+#!/bin/sh
+
+IFS='%'
+PROJECT=OBehave
+PODSPEC=$PROJECT.podspec
+SRC_ROOT=$PROJECT/Classes
+cd $SRC_ROOT
+
+generated_subspec=""
+
+function create_subspec() {
+  for file in "$1"/*; do
+    if [ -d "$file" ] ; then
+      generated_subspec+="$4"
+      dir=`dirname $file`
+      base=`basename $file`
+      srcpath=`dirname $SRC_ROOT/${dir#./}/${base#./}/.`
+      subspec=`echo "$base" | tr '[:upper:]' '[:lower:]'`
+
+      generated_subspec+="$3$2.subspec '$base' do |$subspec|\n"
+
+      if [ ! -z `ls -p $file | grep -v /` ]; then
+        generated_subspec+="$3  $subspec.source_files = '${srcpath/.\//}'\n"
+      fi
+
+      create_subspec $file $subspec "  $3"
+      generated_subspec+="$3end\n"
+    fi
+  done
+}
+
+create_subspec . "s" "  " "\n"
+
+cd - > /dev/null
+
+TEMPLATE=`cat $PODSPEC.template`
+TEMPLATE=${TEMPLATE/__VERSION__/$1}
+TEMPLATE=${TEMPLATE/__SUBSPECS__/$generated_subspec}
+
+echo $TEMPLATE > $PODSPEC
+pod spec lint $PODSPEC
