@@ -10,7 +10,7 @@ import UIKit
 
 // MARK: - OBEmptyStateBehaviorDataSource
 public protocol OBEmptyStateBehaviorDataSource {
-    func viewToDisplayOnEmpty(for Behavior: OBEmptyStateBehavior?) -> UIView?
+    func viewToDisplayOnEmpty(for behavior: OBEmptyStateBehavior?) -> UIView?
 }
 
 // MARK: - Views that can have empty states
