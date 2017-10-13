@@ -9,7 +9,7 @@
 import UIKit
 
 /// Custom presentation controller that displays a view over a blurred background
-class OBDimmedBackgroundPresentationController: OBInsetPresentationController {
+internal class OBDimmedBackgroundPresentationController: OBInsetPresentationController {
     var dimmingColor: UIColor = UIColor.black.withAlphaComponent(0.6)
     
     override func backgroundViewForPresentation() -> UIView? {

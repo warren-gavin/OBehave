@@ -9,16 +9,16 @@
 import UIKit
 
 /// Reduce a constraint by a fixed amount when a keyboard appears
-class OBFixedConstraintChangeKeyboardObserverBehavior: OBKeyboardObserverBehavior {
+public final class OBFixedConstraintChangeKeyboardObserverBehavior: OBKeyboardObserverBehavior {
     @IBOutlet public var heightLayoutConstraint: NSLayoutConstraint?
     @IBInspectable public var heightReduction: CGFloat = .defaultHeightReduction
     
-    override func onKeyboardAppear(in rect: CGRect) {
+    override public func onKeyboardAppear(in rect: CGRect) {
         heightLayoutConstraint?.constant -= heightReduction
         locked = true
     }
     
-    override func onKeyboardDisappear(in rect: CGRect) {
+    override public func onKeyboardDisappear(in rect: CGRect) {
         heightLayoutConstraint?.constant += heightReduction
     }
 }

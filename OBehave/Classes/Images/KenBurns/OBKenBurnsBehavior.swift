@@ -9,7 +9,7 @@
 import UIKit
 import CoreImage
 
-class OBKenBurnsBehavior: OBBehavior {
+public final class OBKenBurnsBehavior: OBBehavior {
     @IBOutlet public var kenBurnsView: OBKenBurnsView?
     
     @IBAction func start(_ sender: AnyObject?) {
@@ -22,7 +22,7 @@ class OBKenBurnsBehavior: OBBehavior {
 }
 
 @IBDesignable
-class OBKenBurnsView: UIView {
+public final class OBKenBurnsView: UIView {
     @IBInspectable public var faceDetection: Bool = false {
         didSet {
             allKenBurnsSubviews.forEach { $0.detectFaces = faceDetection }

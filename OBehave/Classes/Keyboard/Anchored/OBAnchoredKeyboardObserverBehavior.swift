@@ -13,7 +13,7 @@ import UIKit
  
  This behavior only makes sense if the constraint is a view's bottom constraint
  */
-public class OBAnchoredKeyboardObserverBehavior: OBKeyboardObserverBehavior {
+public final class OBAnchoredKeyboardObserverBehavior: OBKeyboardObserverBehavior {
     @IBOutlet public weak var anchorConstraint: NSLayoutConstraint? {
         didSet {
             originalAnchorConstant = anchorConstraint?.constant

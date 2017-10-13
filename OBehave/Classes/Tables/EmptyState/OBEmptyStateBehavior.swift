@@ -20,7 +20,7 @@ enum DataSetView {
 }
 
 // MARK: - Behavior
-public class OBEmptyStateBehavior: OBBehavior {
+public final class OBEmptyStateBehavior: OBBehavior {
     @IBOutlet public var scrollView: UIScrollView! {
         didSet {
             switch scrollView {

@@ -141,7 +141,7 @@ extension UIViewController {
  *    Behavior itself, instead the full experience as shown on screen is a combination of the Behavior plus
  *    side effect objects working together
  */
-public class OBBehaviorEffect: NSObject {
+open class OBBehaviorEffect: NSObject {
     /**
     Perform the side effect on an object. This can be anything we want
     

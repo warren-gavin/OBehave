@@ -21,7 +21,7 @@ protocol OBImagePickerBehaviorDataSource: OBBehaviorDataSource {
     func imagePickerSelectionMessage(_ behavior: OBImagePickerBehavior) -> String?
 }
 
-class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+public final class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet public var imageView: UIImageView?
     
     @IBAction func displayImagePickerOptions(_ sender: AnyObject?) {
@@ -35,11 +35,11 @@ class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataSource, UIImag
         // If the user wants to select images from the camera they must supply the
         // text to prompt the user to do this
         if let selectFromCamera = dataSource.imagePickerSelectFromCameraText(self), UIImagePickerController.isSourceTypeAvailable(.camera) {
-            let pickCameraImage = { [unowned self] (action: UIAlertAction) -> Void in
+            let pickCameraImage = UIAlertAction(title: selectFromCamera, style: .default) { [unowned self] (action: UIAlertAction) -> Void in
                 self.pickImage(.camera)
             }
             
-            actionSheet.addAction(UIAlertAction(title: selectFromCamera, style: .default, handler: pickCameraImage))
+            actionSheet.addAction(pickCameraImage)
         }
         
         // If the user wants to select images from the library they must supply the
@@ -65,7 +65,7 @@ class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataSource, UIImag
         }
     }
 
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         picker.dismiss(animated: true) { [unowned self] in
             let delegate: OBImagePickerBehaviorDelegate? = self.getDelegate()
             let image = info[UIImagePickerControllerOriginalImage] as? UIImage

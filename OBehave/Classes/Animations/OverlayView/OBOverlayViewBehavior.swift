@@ -15,7 +15,7 @@ public enum OverlayTransitionDirection: Int {
     case trailing
 }
 
-public class OBOverlayViewBehavior: OBBehavior {
+public final class OBOverlayViewBehavior: OBBehavior {
     @IBOutlet public var viewToDisplay: UIView!
     
     @IBInspectable public var dimmingColor: UIColor = .clear

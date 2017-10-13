@@ -8,7 +8,7 @@
 
 import UIKit
 
-final public class OBTintImageBehaviorEffect: OBBehaviorEffect {
+public final class OBTintImageBehaviorEffect: OBBehaviorEffect {
     @IBInspectable public var tintColor: UIColor?
     
     override func performEffect(on object: AnyObject?, percentage percent:CGFloat) -> AnyObject? {

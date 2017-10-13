@@ -9,7 +9,7 @@
 import UIKit
 import Accelerate
 
-final public class OBBlurImageBehaviorEffect: OBBehaviorEffect {
+public final class OBBlurImageBehaviorEffect: OBBehaviorEffect {
     @IBInspectable public var maxRadius: CGFloat = .maxRadius
     @IBInspectable public var saturation: CGFloat = .saturation
     @IBInspectable public var tintColor: UIColor?

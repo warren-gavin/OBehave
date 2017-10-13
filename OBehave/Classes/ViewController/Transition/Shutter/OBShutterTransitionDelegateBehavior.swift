@@ -16,7 +16,7 @@ public protocol OBShutterTransitionDelegateBehaviorDataSource: OBTransitionDeleg
 // The shutter presentation splits the displayed view in two and initialises
 // the two views offscreen. The transition animates the top and bottom views
 // coming together, as they combine to create the presented view
-public class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBehavior {
+public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBehavior {
     private var topView: UIImageView?
     private var bottomView: UIImageView?
     private var subviews: [UIView]?
