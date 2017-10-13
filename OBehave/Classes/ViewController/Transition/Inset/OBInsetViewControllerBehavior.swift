@@ -11,7 +11,7 @@ import UIKit
 /**
  Present a small view controller modally
  */
-public class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewControllerTransitioningDelegate {
+open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewControllerTransitioningDelegate {
     ///  Normalised width of the presented view
     @IBInspectable public var viewWidth: CGFloat = 0.7
     
@@ -26,7 +26,7 @@ public class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCo
     
     var keyboardStartPosition: CGFloat?
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
 
         owner?.modalPresentationStyle = .custom

@@ -9,24 +9,24 @@
 import UIKit
 
 public protocol OBKeyboardObserverBehaviorDelegate: OBBehaviorDelegate {
-    func keyboardWillAppear(from Behavior: OBKeyboardObserverBehavior)
-    func keyboardWillDisappear(from Behavior: OBKeyboardObserverBehavior)
-    func keyboardDidAppear(from Behavior: OBKeyboardObserverBehavior)
-    func keyboardDidDisappear(from Behavior: OBKeyboardObserverBehavior)
-    func keyboardBehaviorShouldObserveKeyboard(from Behavior: OBKeyboardObserverBehavior) -> Bool
+    func keyboardWillAppear(from behavior: OBKeyboardObserverBehavior)
+    func keyboardWillDisappear(from behavior: OBKeyboardObserverBehavior)
+    func keyboardDidAppear(from behavior: OBKeyboardObserverBehavior)
+    func keyboardDidDisappear(from behavior: OBKeyboardObserverBehavior)
+    func keyboardBehaviorShouldObserveKeyboard(from behavior: OBKeyboardObserverBehavior) -> Bool
 }
 
 public extension OBKeyboardObserverBehaviorDelegate {
-    func keyboardWillAppear(from Behavior: OBKeyboardObserverBehavior) {
+    func keyboardWillAppear(from behavior: OBKeyboardObserverBehavior) {
     }
     
-    func keyboardWillDisappear(from Behavior: OBKeyboardObserverBehavior) {
+    func keyboardWillDisappear(from behavior: OBKeyboardObserverBehavior) {
     }
     
-    func keyboardDidAppear(from Behavior: OBKeyboardObserverBehavior) {
+    func keyboardDidAppear(from behavior: OBKeyboardObserverBehavior) {
     }
     
-    func keyboardDidDisappear(from Behavior: OBKeyboardObserverBehavior) {
+    func keyboardDidDisappear(from behavior: OBKeyboardObserverBehavior) {
     }
 }
 
@@ -35,7 +35,7 @@ public extension OBKeyboardObserverBehaviorDelegate {
  * of a view.
  * This is useful for example for full screen view controllers that can be partially hidden by the keyboard.
  */
-public class OBKeyboardObserverBehavior: OBBehavior {
+open class OBKeyboardObserverBehavior: OBBehavior {
     // MARK: Outlets
     @IBOutlet public var view: UIView?
     @IBInspectable public var tapToDismiss: Bool = true
@@ -57,7 +57,7 @@ public class OBKeyboardObserverBehavior: OBBehavior {
         return gesture
     }()
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
 
         let notificationCenter = NotificationCenter.default
