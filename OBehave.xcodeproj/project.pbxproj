@@ -65,7 +65,7 @@
 		B01119911F5572D200CA0418 /* OBehaveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OBehaveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B01119961F5572D200CA0418 /* OBehaveTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBehaveTests.swift; sourceTree = "<group>"; };
 		B01119981F5572D200CA0418 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B089A5A21F8A836100BE1C7F /* OBBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBBehavior.swift; path = OBehave/Classes/Core/OBBehavior.swift; sourceTree = SOURCE_ROOT; };
+		B089A5A21F8A836100BE1C7F /* OBBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBBehavior.swift; path = OBehave/Classes/OBBehavior.swift; sourceTree = SOURCE_ROOT; };
 		B089A5B21F8A852C00BE1C7F /* OBShutterTransitionDelegateBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBShutterTransitionDelegateBehavior.swift; path = OBehave/Classes/ViewController/Transition/Shutter/OBShutterTransitionDelegateBehavior.swift; sourceTree = SOURCE_ROOT; };
 		B089A5B31F8A852C00BE1C7F /* OBParallaxBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBParallaxBehavior.swift; path = OBehave/Classes/Images/Parallax/OBParallaxBehavior.swift; sourceTree = SOURCE_ROOT; };
 		B089A5B51F8A852C00BE1C7F /* OBOverlayViewBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBOverlayViewBehavior.swift; path = OBehave/Classes/Animations/OverlayView/OBOverlayViewBehavior.swift; sourceTree = SOURCE_ROOT; };
@@ -162,9 +162,9 @@
 		B089A5A51F8A840700BE1C7F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				B089A5A21F8A836100BE1C7F /* OBBehavior.swift */,
 				B089A5AC1F8A84C300BE1C7F /* Actions */,
 				B089A5AB1F8A849E00BE1C7F /* Animations */,
-				B089A5A61F8A841000BE1C7F /* Core */,
 				B089A5AD1F8A84CA00BE1C7F /* Effects */,
 				B089A5AE1F8A84D200BE1C7F /* Images */,
 				B089A5A71F8A844200BE1C7F /* Keyboard */,
@@ -173,14 +173,6 @@
 				B089A5E01F8A88CF00BE1C7F /* ViewController */,
 			);
 			path = Classes;
-			sourceTree = "<group>";
-		};
-		B089A5A61F8A841000BE1C7F /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				B089A5A21F8A836100BE1C7F /* OBBehavior.swift */,
-			);
-			path = Core;
 			sourceTree = "<group>";
 		};
 		B089A5A71F8A844200BE1C7F /* Keyboard */ = {
