@@ -14,9 +14,9 @@ public protocol OBSendMailBehaviorDataSource: OBBehaviorDataSource {
     var barColor: UIColor { get }
     var textAttributes: [NSAttributedStringKey: Any]? { get }
     
-    func subject(for Behavior: OBSendMailBehavior) -> String
-    func address(for Behavior: OBSendMailBehavior) -> String
-    func body(for Behavior: OBSendMailBehavior) -> String
+    func subject(for behavior: OBSendMailBehavior) -> String
+    func address(for behavior: OBSendMailBehavior) -> String
+    func body(for behavior: OBSendMailBehavior) -> String
 }
 
 extension OBSendMailBehaviorDataSource {
@@ -26,15 +26,15 @@ extension OBSendMailBehaviorDataSource {
 }
 
 public protocol OBSendMailBehaviorDelegate: OBBehaviorDelegate {
-    func finished(presenting Behavior: OBSendMailBehavior)
-    func unavailable(_ Behavior: OBSendMailBehavior)
+    func finished(presenting behavior: OBSendMailBehavior)
+    func unavailable(_ behavior: OBSendMailBehavior)
 }
 
 extension OBSendMailBehaviorDelegate {
-    public func finished(presenting Behavior: OBSendMailBehavior) {
+    public func finished(presenting behavior: OBSendMailBehavior) {
     }
 
-    public func unavailable(_ Behavior: OBSendMailBehavior) {
+    public func unavailable(_ behavior: OBSendMailBehavior) {
     }
 }
 

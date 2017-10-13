@@ -41,12 +41,8 @@ create_subspec . "s" "  " "\n"
 
 cd - > /dev/null
 
-echo "Generating podspec..."
 TEMPLATE=`cat $PODSPEC.template`
 TEMPLATE=${TEMPLATE/__VERSION__/$1}
 TEMPLATE=${TEMPLATE/__SUBSPECS__/$generated_subspec}
 
 echo $TEMPLATE > $PODSPEC
-
-echo "Linting podspec..."
-pod spec lint $PODSPEC
