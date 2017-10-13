@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B01119DE1F55CE0400CA0418 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119DD1F55CE0400CA0418 /* AppDelegate.swift */; };
-		B01119E01F55CE0400CA0418 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119DF1F55CE0400CA0418 /* ViewController.swift */; };
 		B01119E31F55CE0400CA0418 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B01119E11F55CE0400CA0418 /* Main.storyboard */; };
 		B01119E51F55CE0400CA0418 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B01119E41F55CE0400CA0418 /* Assets.xcassets */; };
 		B01119E81F55CE0400CA0418 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B01119E61F55CE0400CA0418 /* LaunchScreen.storyboard */; };
@@ -75,7 +74,6 @@
 /* Begin PBXFileReference section */
 		B01119DA1F55CE0400CA0418 /* OBehaveExamples.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OBehaveExamples.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B01119DD1F55CE0400CA0418 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B01119DF1F55CE0400CA0418 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B01119E21F55CE0400CA0418 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B01119E41F55CE0400CA0418 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B01119E71F55CE0400CA0418 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -144,7 +142,6 @@
 				B0111A561F55EA7600CA0418 /* BarCodeScannerViewController.swift */,
 				B0111A571F55EA7600CA0418 /* PhoneCallViewController.swift */,
 				B01119DD1F55CE0400CA0418 /* AppDelegate.swift */,
-				B01119DF1F55CE0400CA0418 /* ViewController.swift */,
 				B01119E11F55CE0400CA0418 /* Main.storyboard */,
 				B01119E41F55CE0400CA0418 /* Assets.xcassets */,
 				B01119E61F55CE0400CA0418 /* LaunchScreen.storyboard */,
@@ -342,7 +339,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B01119E01F55CE0400CA0418 /* ViewController.swift in Sources */,
 				B0111A591F55EA7600CA0418 /* PhoneCallViewController.swift in Sources */,
 				B0111A581F55EA7600CA0418 /* BarCodeScannerViewController.swift in Sources */,
 				B01119DE1F55CE0400CA0418 /* AppDelegate.swift in Sources */,
@@ -452,12 +448,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -503,10 +500,11 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

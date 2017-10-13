@@ -31,11 +31,11 @@ class OBParallaxTableHeaderBehavior: OBBehavior {
     private var headerImage: UIImage?
     private var lastScrollPoint: CGFloat = 0.0
     
-    func tableHeaderStartMoving(_ notification: Notification?) {
+    @objc func tableHeaderStartMoving(_ notification: Notification?) {
         imageView?.frame = resizedImageFrame()
     }
     
-    func tableHeaderStopping(_ notification: Notification?) {
+    @objc func tableHeaderStopping(_ notification: Notification?) {
         guard let header = imageView?.superview,
             let offsetInfo = notification?.userInfo as? [String: CGFloat],
             let point = offsetInfo["point"] else {
@@ -47,7 +47,7 @@ class OBParallaxTableHeaderBehavior: OBBehavior {
         lastScrollPoint = point
     }
     
-    func tableHeaderMoved(_ notification: Notification?) {
+    @objc func tableHeaderMoved(_ notification: Notification?) {
         guard let offsetInfo = notification?.userInfo as? [String: CGFloat], let point = offsetInfo["point"] else {
             return
         }
@@ -106,4 +106,3 @@ private extension Selector {
     static let tableHeaderStopping    = #selector(OBParallaxTableHeaderBehavior.tableHeaderStopping(_:))
     static let tableHeaderMoved       = #selector(OBParallaxTableHeaderBehavior.tableHeaderMoved(_:))
 }
-

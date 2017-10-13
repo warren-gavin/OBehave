@@ -1,5 +1,5 @@
 //
-//  OBSlideTransitionBehavior.swift
+//  OBSlideTransitionDelegateBehavior.swift
 //  OBehave
 //
 //  Created by Warren Gavin on 10/01/17.
@@ -13,7 +13,7 @@ public protocol OBSlideTransitionBehaviorDataSource: OBTransitionDelegateBehavio
     var slideOutAngle: CGFloat { get }
 }
 
-public class OBSlideTransitionBehavior: OBTransitionDelegateBehavior {
+public class OBSlideTransitionDelegateBehavior: OBTransitionDelegateBehavior {
     override public func animatePresentation(using transitionContext: UIViewControllerContextTransitioning) -> (() -> Void)? {
         guard let presentedControllerView = transitionContext.view(forKey: .to),
             let presentedController = transitionContext.viewController(forKey: .to) else {
