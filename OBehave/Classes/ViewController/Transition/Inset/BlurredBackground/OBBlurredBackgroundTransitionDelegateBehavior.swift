@@ -11,7 +11,7 @@ import UIKit
 /**
  Present a small view modally, with a blurred background chrome.
  */
-class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavior {
+public final class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavior {
     @IBInspectable public var blurStyle: Int = .defaultBlurStyle {
         didSet {
             if nil == UIBlurEffectStyle(rawValue: blurStyle) {

@@ -20,7 +20,7 @@ protocol OBSaveImageBehaviorDataSource: OBBehaviorDataSource {
     var confirmationText: String { get }
 }
 
-class OBSaveImageBehavior: OBBehavior, OBSaveImageBehaviorDataSource {
+public final class OBSaveImageBehavior: OBBehavior, OBSaveImageBehaviorDataSource {
     @IBInspectable public var prompt: Bool = false
     @IBInspectable public var pressToSave: Bool = false {
         didSet {

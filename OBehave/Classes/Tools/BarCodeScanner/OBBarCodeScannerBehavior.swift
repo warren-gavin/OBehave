@@ -14,7 +14,7 @@ public protocol OBBarCodeScannerBehaviorDelegate: OBBehaviorDelegate {
     func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didFailWithError error: NSError?)
 }
 
-final public class OBBarCodeScannerBehavior: OBBehavior {
+public final class OBBarCodeScannerBehavior: OBBehavior {
     @IBOutlet public var containerView: UIView? {
         didSet {
             containerView?.layer.insertSublayer(cameraPreviewLayer, at: 0)

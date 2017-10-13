@@ -38,7 +38,7 @@ extension OBSendMailBehaviorDelegate {
     }
 }
 
-public class OBSendMailBehavior: OBBehavior {
+public final class OBSendMailBehavior: OBBehavior {
     @IBAction public func showMail(_ sender: UIButton? = nil) {
         if !MFMailComposeViewController.canSendMail() {
             let delegate: OBSendMailBehaviorDelegate? = getDelegate()

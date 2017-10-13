@@ -35,8 +35,10 @@ open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCont
 
     // MARK: OBKeyboardObserverBehavior
     override public func onKeyboardAppear(in rect: CGRect) {
-        guard let containerView = owner?.presentationController?.containerView,
-            let presentationView = owner?.presentationController?.presentedView, 0 < rect.size.height else {
+        guard
+            let containerView = owner?.presentationController?.containerView,
+            let presentationView = owner?.presentationController?.presentedView,
+            0 < rect.size.height else {
             return
         }
 

@@ -30,7 +30,7 @@ extension OBInsetPresentationControllerDataSource {
     }
 }
 
-public class OBInsetPresentationController: UIPresentationController {
+open class OBInsetPresentationController: UIPresentationController {
     private lazy var backgroundView: UIView? = {
         return self.backgroundViewForPresentation()
     }()
@@ -55,7 +55,7 @@ public class OBInsetPresentationController: UIPresentationController {
     /**
      Animates the appearance of the blurred background
      */
-    override public func presentationTransitionWillBegin() {
+    override open func presentationTransitionWillBegin() {
         guard let containerView = containerView, let backgroundView = backgroundView, let presentedView = presentedView else {
             return
         }
@@ -77,7 +77,7 @@ public class OBInsetPresentationController: UIPresentationController {
      
      - parameter completed: Flag for animation completion
      */
-    override public func presentationTransitionDidEnd(_ completed: Bool) {
+    override open func presentationTransitionDidEnd(_ completed: Bool) {
         if !completed {
             backgroundView?.removeFromSuperview()
         }
@@ -86,7 +86,7 @@ public class OBInsetPresentationController: UIPresentationController {
     /**
      Animated the removal of the blurred background from the screen
      */
-    override public func dismissalTransitionWillBegin() {
+    override open func dismissalTransitionWillBegin() {
         guard let backgroundView = backgroundView else {
             return
         }
@@ -103,7 +103,7 @@ public class OBInsetPresentationController: UIPresentationController {
      
      - parameter completed: Flag for animation completion
      */
-    override public func dismissalTransitionDidEnd(_ completed: Bool) {
+    override open func dismissalTransitionDidEnd(_ completed: Bool) {
         if completed {
             backgroundView?.removeFromSuperview()
         }
@@ -114,7 +114,7 @@ public class OBInsetPresentationController: UIPresentationController {
      
      - returns: Frame inset by the defined width and height values
      */
-    override public var frameOfPresentedViewInContainerView : CGRect {
+    override open var frameOfPresentedViewInContainerView : CGRect {
         guard let frame = containerView?.bounds, let dataSource = dataSource else {
             return super.frameOfPresentedViewInContainerView
         }
@@ -136,7 +136,7 @@ public class OBInsetPresentationController: UIPresentationController {
      - parameter size:        New frame size
      - parameter coordinator: Animation coordinator
      */
-    override public func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override open func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         
         guard let containerView = containerView, let backgroundView = backgroundView else {

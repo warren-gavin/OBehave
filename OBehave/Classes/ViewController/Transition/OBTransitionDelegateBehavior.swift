@@ -54,10 +54,10 @@ extension OBTransitionDelegateBehaviorDataSource {
 /// Specific types of transitions should extend this class and override
 /// the animatePresentation(using:completion:) and animateDismissal(using:completion:)
 /// methods to implement the exact type of transition needed
-public class OBTransitionDelegateBehavior: OBBehavior, UIViewControllerTransitioningDelegate {
+open class OBTransitionDelegateBehavior: OBBehavior, UIViewControllerTransitioningDelegate {
     private var isPresenting = true
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
         
         owner?.modalPresentationStyle = .custom

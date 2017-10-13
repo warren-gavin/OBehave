@@ -38,16 +38,16 @@ import UIKit
  *    @param localization  ISO country code for the localization to switch
  *                         to.
  */
-class OBChangeLocalizationBehavior: OBBehavior {
-    override func setup() {
+public final class OBChangeLocalizationBehavior: OBBehavior {
+    override public func setup() {
         super.setup()
         addObserver(self, forKeyPath: "owner.view", options: .new, context: nil)
     }
     
-    override func observeValue(forKeyPath keyPath: String?,
-                               of object: Any?,
-                               change: [NSKeyValueChangeKey : Any]?,
-                               context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?,
+                                      of object: Any?,
+                                      change: [NSKeyValueChangeKey : Any]?,
+                                      context: UnsafeMutableRawPointer?) {
         if "owner.view" == keyPath {
             owner?.observeLocalizationChanges()
         }
@@ -108,7 +108,7 @@ private let swizzleLocalizationMethods: () = {
     else {
         return
     }
-
+    
     method_exchangeImplementations(originalMethod, swizzledMethod)
 }()
 
@@ -153,3 +153,4 @@ private extension Selector {
     static let swizzledSelector = #selector(Bundle.swizzledLocalizedString(forKey:value:table:))
     static let reloadViewController = #selector(UIViewController.loadView)
 }
+

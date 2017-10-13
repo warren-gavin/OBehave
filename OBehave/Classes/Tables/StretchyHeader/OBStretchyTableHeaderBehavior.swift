@@ -13,7 +13,7 @@ public protocol OBStretchyTableHeaderBehaviorDataSource: OBBehaviorDataSource {
     var minHeaderHeight: CGFloat { get }
 }
 
-public class OBStretchyTableHeaderBehavior: OBBehavior {
+public final class OBStretchyTableHeaderBehavior: OBBehavior {
     // MARK: Outlets
     @IBOutlet public var imageView: UIImageView? {
         didSet {

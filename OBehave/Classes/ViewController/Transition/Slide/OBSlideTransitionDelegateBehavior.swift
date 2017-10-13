@@ -13,7 +13,7 @@ public protocol OBSlideTransitionBehaviorDataSource: OBTransitionDelegateBehavio
     var slideOutAngle: CGFloat { get }
 }
 
-public class OBSlideTransitionDelegateBehavior: OBTransitionDelegateBehavior {
+public final class OBSlideTransitionDelegateBehavior: OBTransitionDelegateBehavior {
     override public func animatePresentation(using transitionContext: UIViewControllerContextTransitioning) -> (() -> Void)? {
         guard let presentedControllerView = transitionContext.view(forKey: .to),
             let presentedController = transitionContext.viewController(forKey: .to) else {

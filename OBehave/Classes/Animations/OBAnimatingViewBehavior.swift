@@ -27,7 +27,7 @@ public protocol OBAnimatingViewBehaviorDelegate: OBBehaviorDelegate {
  *    When creating an animating behavior you should implement the delegate's execution method
  *    and optionally the methods to prepare and reverse the animation.
  */
-public class OBAnimatingViewBehavior: OBBehavior {
+open class OBAnimatingViewBehavior: OBBehavior {
     @IBInspectable public var fadeIn:   Bool    = false
     @IBInspectable public var duration: Double  = .defaultAnimationDuration
     @IBInspectable public var delay:    Double  = .defaultAnimateAfterDuration
@@ -56,7 +56,7 @@ public class OBAnimatingViewBehavior: OBBehavior {
         delegate?.reverseAnimation(self)
     }
     
-    override public func setup() {
+    override open func setup() {
         super.setup()
 
         delegate = self

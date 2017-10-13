@@ -11,7 +11,7 @@ import UIKit
 /**
  Present a small view modally, with a dimmed color background chrome.
  */
-class OBDimmedBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavior {
+public final class OBDimmedBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavior {
     @IBInspectable public var dimmingColor: UIColor = .defaultDimmingColor
     
     // MARK: UIViewControllerTransitioningDelegate

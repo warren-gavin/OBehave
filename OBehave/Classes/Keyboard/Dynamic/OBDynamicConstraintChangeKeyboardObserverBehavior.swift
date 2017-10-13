@@ -9,7 +9,7 @@
 import UIKit
 
 /// Reduce a constraint by a factor when a keyboard appears
-public class OBDynamicConstraintChangeKeyboardObserverBehavior: OBKeyboardObserverBehavior {
+public final class OBDynamicConstraintChangeKeyboardObserverBehavior: OBKeyboardObserverBehavior {
     @IBOutlet public var constraints: [NSLayoutConstraint]?
     @IBInspectable public var resizeFactor: CGFloat = 0.5
     

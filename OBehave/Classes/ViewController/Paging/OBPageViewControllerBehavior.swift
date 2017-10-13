@@ -14,7 +14,7 @@ public protocol OBPageViewControllerBehaviorDataSource: OBBehaviorDataSource {
     var currentPageIndicatorTintColor: UIColor? { get }
 }
 
-public class OBPageViewControllerBehavior: OBBehavior {
+public final class OBPageViewControllerBehavior: OBBehavior {
     private lazy var viewControllers: [UIViewController] = {
         guard let dataSource: OBPageViewControllerBehaviorDataSource = self.getDataSource() else {
             return []

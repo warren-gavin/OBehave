@@ -8,7 +8,7 @@
 
 import UIKit
 
-class OBParallaxBehavior: OBBehavior {
+public final class OBParallaxBehavior: OBBehavior {
     @IBInspectable public var parallaxOffset: CGPoint = .zero
     @IBInspectable public var parallaxRatio: CGPoint  = .ratio
     
@@ -44,7 +44,7 @@ private extension OBParallaxBehavior {
 
 // MARK: UIScrollViewDelegate
 extension OBParallaxBehavior: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if let view = view {
             view.center = CGPoint(x: parallaxOffset.x + scrollView.contentOffset.x * parallaxRatio.x,
                                   y: view.center.y)
