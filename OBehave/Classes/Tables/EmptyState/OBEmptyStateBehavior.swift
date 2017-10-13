@@ -62,8 +62,8 @@ private extension OBEmptyStateBehavior {
         
         zip(viewClassType.swizzledMethods, viewClassType.originalMethods).forEach {
             guard
-                let swizzledMethod = class_getInstanceMethod(Bundle.self, $0),
-                let originalMethod = class_getInstanceMethod(Bundle.self, $1)
+                let swizzledMethod = class_getInstanceMethod(viewClass, $0),
+                let originalMethod = class_getInstanceMethod(viewClass, $1)
             else {
                 return
             }
