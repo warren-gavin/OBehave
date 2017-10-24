@@ -38,7 +38,8 @@ open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCont
         guard
             let containerView = owner?.presentationController?.containerView,
             let presentationView = owner?.presentationController?.presentedView,
-            0 < rect.size.height else {
+            0 < rect.size.height
+        else {
             return
         }
 
@@ -70,14 +71,12 @@ open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCont
         originalPresentationViewFrame = presentationView.frame
         
         if resizeForKeyboard {
-            containerView.frame = CGRect(
-                origin: containerView.frame.origin,
-                size: CGSize(width: containerView.frame.width, height: containerView.frame.height - rect.size.height)
-            )
+            containerView.frame = CGRect(origin: containerView.frame.origin,
+                                         size: CGSize(width: containerView.frame.width,
+                                                      height: containerView.frame.height - rect.size.height))
             
             presentationView.frame = containerView.frame.insetBy(dx: containerView.frame.width * (1.0 - frameWidthRatio) * 0.5,
-                dy: containerView.frame.height * (1.0 - frameHeightRatio) * 0.5
-            )
+                                                                 dy: containerView.frame.height * (1.0 - frameHeightRatio) * 0.5)
             
             owner?.presentationController?.presentedView?.frame = presentationView.frame
             owner?.presentationController?.containerViewWillLayoutSubviews()

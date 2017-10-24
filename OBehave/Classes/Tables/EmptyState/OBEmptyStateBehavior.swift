@@ -111,8 +111,8 @@ extension DataSetView {
 // MARK: - DataDisplaying protocol
 protocol DataDisplaying: class {
     var numberOfSections: Int { get }
-    var sectionCount: (Int) -> Int { get }
-    
+    func count(for section: Int) -> Int
+
     static var originalMethods: [Selector] { get }
     static var swizzledMethods: [Selector] { get }
 }
@@ -161,7 +161,7 @@ private struct Constants {
 extension DataDisplaying {
     var isEmpty: Bool {
         return 0 == (0 ..< numberOfSections).reduce(0) { (result, section) in
-            result + sectionCount(section)
+            result + count(for: section)
         }
     }
     
@@ -205,10 +205,10 @@ extension DataDisplaying {
 
 // MARK: - Extending table and collection views to conform to DataDisplaying
 extension UITableView: DataDisplaying {
-    var sectionCount: (Int) -> Int {
-        return numberOfRows
+    func count(for section: Int) -> Int {
+        return dataSource?.tableView(self, numberOfRowsInSection: section) ?? 0
     }
-    
+
     @objc func ob_reloadData() {
         showEmptyState = isEmpty
         return ob_reloadData()
@@ -231,10 +231,10 @@ extension UITableView: DataDisplaying {
 }
 
 extension UICollectionView: DataDisplaying {
-    var sectionCount: (Int) -> Int {
-        return numberOfItems
+    func count(for section: Int) -> Int {
+        return dataSource?.collectionView(self, numberOfItemsInSection: section) ?? 0
     }
-    
+
     @objc func ob_reloadData() {
         defer {
             showEmptyState = isEmpty
