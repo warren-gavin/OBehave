@@ -131,6 +131,10 @@ extension UIViewController {
     func allAssociatedBehaviors() -> [OBBehavior]? {
         return objc_getAssociatedObject(self, &Keys.allBehaviorsKey) as? [OBBehavior]
     }
+
+    public func behaviours<T>() -> [T] {
+        return allAssociatedBehaviors()?.flatMap { $0 as? T } ?? []
+    }
 }
 
 /**
