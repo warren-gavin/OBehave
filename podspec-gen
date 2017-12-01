@@ -1,5 +1,10 @@
 #!/bin/sh
 
+## Create a new podspec
+##
+## You must create a release branch, given the name of the release version_number
+## e.g. 'release/1.2.3' will result in a podspec with version '1.2.3'
+
 IFS='%'
 PROJECT=OBehave
 PODSPEC=$PROJECT.podspec
@@ -42,7 +47,7 @@ create_subspec . "s" "  " "\n"
 cd - > /dev/null
 
 TEMPLATE=`cat $PODSPEC.template`
-TEMPLATE=${TEMPLATE/__VERSION__/$1}
+TEMPLATE=${TEMPLATE/__VERSION__/`git branch | grep \* | cut -d ' ' -f2 | xargs basename`}
 TEMPLATE=${TEMPLATE/__SUBSPECS__/$generated_subspec}
 
 echo $TEMPLATE > $PODSPEC
