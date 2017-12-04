@@ -34,7 +34,6 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
 
             headerHeight = tableHeaderView.bounds.size.height
             addObserver(self, forKeyPath: .tableViewBounds, options: .new, context: nil)
-            addObserver(self, forKeyPath: .tableViewFrame,  options: .new, context: nil)
             headerView = tableView.tableHeaderView
         }
     }
@@ -74,10 +73,6 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
         }
         
         switch keyPath {
-        case String.tableViewFrame:
-            removeObserver(self, forKeyPath: .tableViewFrame)
-            updateHeaderViewInView()
-
         case String.tableViewBounds:
             updateHeaderViewInView()
 
@@ -113,11 +108,7 @@ private extension OBStretchyTableHeaderBehavior {
         
         let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + headerHeight) / maxEffectDistance))
         
-        let x = effect
-        let p = x?.performEffect(on: headerImage, percentage: percentage)
-        
-//        if let effectedImage = effect?.performEffect?(on: headerImage, percentage: percentage) as? UIImage {
-        if let effectedImage = p as? UIImage {
+        if let effectedImage = effect?.performEffect(on: headerImage, percentage: percentage) as? UIImage {
             removeObserver(self, forKeyPath: .imageViewImage)
             imageView?.image = effectedImage
             addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
@@ -128,7 +119,6 @@ private extension OBStretchyTableHeaderBehavior {
 }
 
 private extension String {
-    static let tableViewFrame  = "tableView.frame"
     static let tableViewBounds = "tableView.bounds"
     static let imageViewImage  = "imageView.image"
 }
