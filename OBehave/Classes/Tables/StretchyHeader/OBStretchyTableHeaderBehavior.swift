@@ -14,15 +14,14 @@ public protocol OBStretchyTableHeaderBehaviorDataSource: OBBehaviorDataSource {
 }
 
 public final class OBStretchyTableHeaderBehavior: OBBehavior {
+    private var observeImageView: NSKeyValueObservation?
+    private var observeTableView: NSKeyValueObservation?
+    
     // MARK: Outlets
     @IBOutlet public var imageView: UIImageView? {
         didSet {
-            guard let _ = imageView else {
-                return
-            }
-            
             headerImage = imageView?.image
-            addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
+            setImageObserver()
         }
     }
 
@@ -32,9 +31,12 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
                 return
             }
 
+            observeTableView = tableView.observe(\.bounds, options: .new) { [unowned self] (_, _) in
+                self.updateHeaderViewInView()
+            }
+            
             headerHeight = tableHeaderView.bounds.size.height
-            addObserver(self, forKeyPath: .tableViewBounds, options: .new, context: nil)
-            headerView = tableView.tableHeaderView
+            headerView   = tableView.tableHeaderView
         }
     }
     
@@ -62,36 +64,22 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
     }
     
     private var headerImage: UIImage?
-    
-    // MARK: Public methods
-    override public func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey : Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        guard let keyPath = keyPath else {
-            return
-        }
-        
-        switch keyPath {
-        case String.tableViewBounds:
-            updateHeaderViewInView()
-
-        case String.imageViewImage:
-            headerImage = imageView?.image
-            
-        default:
-            break
-        }
-    }
-    
-    deinit {
-        removeObserver(self, forKeyPath: .tableViewBounds)
-        removeObserver(self, forKeyPath: .imageViewImage)
-    }
 }
 
 // MARK: - Private methods
 private extension OBStretchyTableHeaderBehavior {
+    private func setImageObserver() {
+        guard let imageView = imageView else {
+            return
+        }
+        
+        observeImageView?.invalidate()
+        
+        observeImageView = imageView.observe(\.image, options: .new) { [unowned self] (imageView, _) in
+            self.headerImage = imageView.image
+        }
+    }
+    
     func updateHeaderViewInView() {
         guard let tableView = tableView else {
             return
@@ -109,9 +97,9 @@ private extension OBStretchyTableHeaderBehavior {
         let percentage = max(0.0, min(1.0, (tableView.contentOffset.y + headerHeight) / maxEffectDistance))
         
         if let effectedImage = effect?.performEffect(on: headerImage, percentage: percentage) as? UIImage {
-            removeObserver(self, forKeyPath: .imageViewImage)
+            observeImageView?.invalidate()
             imageView?.image = effectedImage
-            addObserver(self, forKeyPath: .imageViewImage, options: .new, context: nil)
+            setImageObserver()
         }
         
         headerView?.frame = headerRect

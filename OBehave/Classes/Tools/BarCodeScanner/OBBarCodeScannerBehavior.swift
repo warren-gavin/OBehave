@@ -18,6 +18,9 @@ public final class OBBarCodeScannerBehavior: OBBehavior {
     @IBOutlet public var containerView: UIView? {
         didSet {
             containerView?.layer.insertSublayer(cameraPreviewLayer, at: 0)
+            containerBoundsObserver = containerView?.observe(\.bounds, options: .new) { [unowned self] (_, _) in
+                self.updateCameraPreviewLayer()
+            }
         }
     }
     
@@ -32,13 +35,14 @@ public final class OBBarCodeScannerBehavior: OBBehavior {
         .pdf417,
         .qr,
         .aztec,
+        .interleaved2of5,
+        .itf14,
         .dataMatrix
     ]
     
-    private lazy var session: AVCaptureSession = {
-        return AVCaptureSession()
-    }()
-    
+    private lazy var session: AVCaptureSession = AVCaptureSession()
+    private var containerBoundsObserver: NSKeyValueObservation?
+
     private lazy var cameraPreviewLayer: AVCaptureVideoPreviewLayer = {
         var layer = AVCaptureVideoPreviewLayer(session: self.session)
         layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -49,22 +53,12 @@ public final class OBBarCodeScannerBehavior: OBBehavior {
     // MARK: Public
     override public func setup() {
         super.setup()
-
         setupBarCodeScanner()
-        addObserver(self, forKeyPath: "containerView.bounds", options: .new, context: nil)
     }
     
     deinit {
         session.stopRunning()
-        removeObserver(self, forKeyPath: "containerView.bounds")
         cameraPreviewLayer.removeFromSuperlayer()
-    }
-    
-    override public func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey : Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        updateCameraPreviewLayer()
     }
 }
 
@@ -100,7 +94,7 @@ private extension OBBarCodeScannerBehavior {
 
 // MARK: AVCaptureMetadataOutputObjectsDelegate
 extension OBBarCodeScannerBehavior: AVCaptureMetadataOutputObjectsDelegate {
-    public func metadataOutput(captureOutput: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
+    public func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         var barCodeBounds = CGRect.zero
         var barCodeString = ""
         
