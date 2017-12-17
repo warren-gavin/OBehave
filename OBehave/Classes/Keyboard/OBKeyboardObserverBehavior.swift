@@ -36,8 +36,6 @@ public extension OBKeyboardObserverBehaviorDelegate {
  * This is useful for example for full screen view controllers that can be partially hidden by the keyboard.
  */
 open class OBKeyboardObserverBehavior: OBBehavior {
-    // MARK: Outlets
-    @IBOutlet public var view: UIView?
     @IBInspectable public var tapToDismiss: Bool = true
     
     internal var locked = false
@@ -174,8 +172,7 @@ private extension OBKeyboardObserverBehavior {
      */
     func animateAlongsideKeyboard(keyboardInfo: [String: NSValue]?, animation: @escaping (CGRect) -> Void, completion: ((Bool) -> Void)?) {
         guard
-            let startFrame = keyboardInfo?[UIKeyboardFrameBeginUserInfoKey]?.cgRectValue,
-            var endFrame = keyboardInfo?[UIKeyboardFrameEndUserInfoKey]?.cgRectValue,
+            let endFrame = keyboardInfo?[UIKeyboardFrameEndUserInfoKey]?.cgRectValue,
             let duration = keyboardInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
             let options = keyboardInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber,
             !locked
@@ -184,18 +181,14 @@ private extension OBKeyboardObserverBehavior {
         }
 
         self.keyboardInfo = keyboardInfo
-        
-        if !startFrame.size.equalTo(endFrame.size) {
-            endFrame.size.height += startFrame.size.height;
-        }
 
         // The keyboard animation is not documented, so we have to hack the value a little to get it out of the keyboard info
         var animationCurve = UIViewAnimationOptions.curveEaseInOut
         NSNumber(value: options.intValue << 16).getValue(&animationCurve)
         
-        let animateAndLayout = {
+        let animateAndLayout: () -> Void = {
             animation(endFrame)
-            self.view?.superview?.layoutIfNeeded()
+            self.owner?.view.layoutIfNeeded()
         }
         
         UIView.animate(withDuration: duration.doubleValue,
@@ -216,8 +209,8 @@ private extension OBKeyboardObserverBehavior {
 
 extension OBKeyboardObserverBehavior: UIGestureRecognizerDelegate {
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        // Disallow recognition of tap gestures in buttons
-        if let view = touch.view, let _ = view as? UIControl {
+        // Disallow recognition of tap gestures in controls
+        if let _ = touch.view as? UIControl {
             return false
         }
         
