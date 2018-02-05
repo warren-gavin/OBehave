@@ -17,6 +17,8 @@ public protocol OBShutterTransitionDelegateBehaviorDataSource: OBTransitionDeleg
 // the two views offscreen. The transition animates the top and bottom views
 // coming together, as they combine to create the presented view
 public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBehavior {
+    @IBInspectable var shutterHeight: CGFloat = .defaultTopHeight
+    
     private var topView: UIImageView?
     private var bottomView: UIImageView?
     private var subviews: [UIView]?
@@ -29,7 +31,7 @@ public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBeha
         }
         
         let dataSource: OBShutterTransitionDelegateBehaviorDataSource? = getDataSource()
-        let height = dataSource?.topHeight ?? .defaultTopHeight
+        let height = dataSource?.topHeight ?? shutterHeight
         
         (topView, bottomView) = split(view: presentedView, at: height)
         
@@ -87,7 +89,7 @@ public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBeha
         }
         
         let dataSource: OBShutterTransitionDelegateBehaviorDataSource? = getDataSource()
-        let height = dataSource?.topHeight ?? .defaultTopHeight
+        let height = dataSource?.topHeight ?? shutterHeight
         
         let (topView, bottomView) = split(view: presentingView, at: height)
         
