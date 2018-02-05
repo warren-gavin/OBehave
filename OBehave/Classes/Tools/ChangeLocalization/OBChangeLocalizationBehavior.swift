@@ -39,20 +39,15 @@ import UIKit
  *                         to.
  */
 public final class OBChangeLocalizationBehavior: OBBehavior {
+    private var localizationObserver: NSKeyValueObservation?
+    
     override public func setup() {
         super.setup()
-        addObserver(self, forKeyPath: "owner.view", options: .new, context: nil)
-    }
-    
-    override public func observeValue(forKeyPath keyPath: String?,
-                                      of object: Any?,
-                                      change: [NSKeyValueChangeKey : Any]?,
-                                      context: UnsafeMutableRawPointer?) {
-        if "owner.view" == keyPath {
-            owner?.observeLocalizationChanges()
-        }
         
-        removeObserver(self, forKeyPath: "owner.view")
+        localizationObserver = owner?.observe(\.view, options: .new) { [unowned self] (owner, _) in
+            owner.observeLocalizationChanges()
+            self.localizationObserver?.invalidate()
+        }
     }
     
     deinit {

@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "OBehave"
-  s.version       = "0.0.11"
+  s.version       = "0.0.12"
   s.summary       = "A collection of drag and drop view controller behaviors"
   s.homepage      = "https://github.com/warren-gavin/OBehave"
   s.license       = { :type => "MIT", :file => "LICENSE" }
