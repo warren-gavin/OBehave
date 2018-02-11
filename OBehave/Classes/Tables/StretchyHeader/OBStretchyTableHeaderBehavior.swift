@@ -43,7 +43,21 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
     // MARK: Private properties
     private var headerHeight: CGFloat = 0 {
         didSet {
-            tableView?.contentInset = UIEdgeInsetsMake(headerHeight, 0, 0, 0)
+            // If we are not in a navigation controller then the table's content inset
+            // will be readjusted later to accomodate the status bar
+            let headerHeightAdjustment: CGFloat = {
+                guard let owner = owner else {
+                    return 0
+                }
+                
+                if let _ = owner.navigationController {
+                    return 0
+                }
+                
+                return UIApplication.shared.statusBarFrame.size.height
+            }()
+            
+            tableView?.contentInset = UIEdgeInsetsMake(headerHeight - headerHeightAdjustment, 0, 0, 0)
             tableView?.contentOffset = CGPoint(x: 0, y: -headerHeight)
         }
     }
