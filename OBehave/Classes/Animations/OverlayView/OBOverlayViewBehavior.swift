@@ -82,6 +82,7 @@ public final class OBOverlayViewBehavior: OBBehavior {
     
     public func hide(completion: ((Bool) -> Void)? = nil) {
         guard let dimmingView = dimmingView else {
+            completion?(false)
             return
         }
         
