@@ -10,6 +10,7 @@
 		B01119921F5572D200CA0418 /* OBehave.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B01119881F5572D200CA0418 /* OBehave.framework */; };
 		B01119971F5572D200CA0418 /* OBehaveTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B01119961F5572D200CA0418 /* OBehaveTests.swift */; };
 		B01119991F5572D200CA0418 /* OBehave.h in Headers */ = {isa = PBXBuildFile; fileRef = B011198B1F5572D200CA0418 /* OBehave.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B091761F208FB59F00433AEE /* OBFullScreenDisplayBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B091761E208FB59F00433AEE /* OBFullScreenDisplayBehavior.swift */; };
 		B0B5EB321F8A8BE100A9861C /* OBInsetViewControllerBehavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = B089A5BA1F8A852D00BE1C7F /* OBInsetViewControllerBehavior.swift */; };
 		B0B5EB331F8A8BE100A9861C /* OBInsetPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B089A5BF1F8A852D00BE1C7F /* OBInsetPresentationController.swift */; };
 		B0B5EB341F8A8BE100A9861C /* OBDimmedBackgroundPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B089A5C21F8A852D00BE1C7F /* OBDimmedBackgroundPresentationController.swift */; };
@@ -101,6 +102,7 @@
 		B089A5D41F8A853000BE1C7F /* OBParallaxTableHeaderBehaviour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBParallaxTableHeaderBehaviour.swift; path = OBehave/Classes/Tables/ParallaxHeader/OBParallaxTableHeaderBehaviour.swift; sourceTree = SOURCE_ROOT; };
 		B089A5D51F8A853000BE1C7F /* OBRotateBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBRotateBehavior.swift; path = OBehave/Classes/Animations/RotateView/OBRotateBehavior.swift; sourceTree = SOURCE_ROOT; };
 		B089A5D61F8A853000BE1C7F /* OBKeyboardObserverBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OBKeyboardObserverBehavior.swift; path = OBehave/Classes/Keyboard/OBKeyboardObserverBehavior.swift; sourceTree = SOURCE_ROOT; };
+		B091761E208FB59F00433AEE /* OBFullScreenDisplayBehavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OBFullScreenDisplayBehavior.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +317,7 @@
 		B089A5E01F8A88CF00BE1C7F /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				B091761D208FB54E00433AEE /* Layout */,
 				B089A5E11F8A88DA00BE1C7F /* Lifecycle */,
 				B089A5E41F8A89F200BE1C7F /* Paging */,
 				B089A5E21F8A891600BE1C7F /* Transition */,
@@ -363,6 +366,14 @@
 				B089A5B61F8A852C00BE1C7F /* OBSlideTransitionDelegateBehavior.swift */,
 			);
 			path = Slide;
+			sourceTree = "<group>";
+		};
+		B091761D208FB54E00433AEE /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				B091761E208FB59F00433AEE /* OBFullScreenDisplayBehavior.swift */,
+			);
+			path = Layout;
 			sourceTree = "<group>";
 		};
 		B0B5EB561F8A8EF600A9861C /* Inset */ = {
@@ -634,6 +645,7 @@
 				B0B5EB331F8A8BE100A9861C /* OBInsetPresentationController.swift in Sources */,
 				B0B5EB4C1F8A8BE100A9861C /* OBAnchoredKeyboardObserverBehavior.swift in Sources */,
 				B0B5EB471F8A8BE100A9861C /* OBTintImageBehaviorEffect.swift in Sources */,
+				B091761F208FB59F00433AEE /* OBFullScreenDisplayBehavior.swift in Sources */,
 				B0B5EB371F8A8BE100A9861C /* OBBlurredBackgroundTransitionDelegateBehavior.swift in Sources */,
 				B0B5EB4A1F8A8BE100A9861C /* OBParallaxBehavior.swift in Sources */,
 				B0B5EB501F8A8BE100A9861C /* OBTapToDismissKeyboardBehavior.swift in Sources */,
