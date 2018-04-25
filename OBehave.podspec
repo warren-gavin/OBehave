@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name          = "OBehave"
-  s.version       = "0.0.14"
+  s.version       = "0.0.15"
   s.summary       = "A collection of drag and drop view controller behaviors"
   s.homepage      = "https://github.com/warren-gavin/OBehave"
   s.license       = { :type => "MIT", :file => "LICENSE" }
@@ -113,6 +113,9 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'ViewController' do |viewcontroller|
+    viewcontroller.subspec 'Layout' do |layout|
+      layout.source_files = 'OBehave/Classes/ViewController/Layout'
+    end
     viewcontroller.subspec 'Lifecycle' do |lifecycle|
       lifecycle.source_files = 'OBehave/Classes/ViewController/Lifecycle'
     end
