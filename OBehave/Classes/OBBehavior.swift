@@ -133,7 +133,11 @@ extension UIViewController {
     }
 
     public func behaviors<T>() -> [T] {
+        #if swift(>=4.1)
+        return allAssociatedBehaviors()?.compactMap { $0 as? T } ?? []
+        #else
         return allAssociatedBehaviors()?.flatMap { $0 as? T } ?? []
+        #endif
     }
 }
 

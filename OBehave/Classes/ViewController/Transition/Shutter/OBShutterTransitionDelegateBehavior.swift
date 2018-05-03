@@ -53,9 +53,15 @@ public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBeha
             $0.alpha = 0.0
         }
         
+        #if swift(>=4.1)
+        [topView, bottomView].compactMap({ $0 }).forEach {
+            presentedView.addSubview($0)
+        }
+        #else
         [topView, bottomView].flatMap({ $0 }).forEach {
             presentedView.addSubview($0)
         }
+        #endif
     
         return { [unowned self] in
             if let topView = self.topView {
@@ -106,9 +112,15 @@ public final class OBShutterTransitionDelegateBehavior: OBTransitionDelegateBeha
             $0.alpha = 0.0
         }
         
+        #if swift(>=4.1)
+        [topView, bottomView].compactMap({ $0 }).forEach {
+            presentingView.addSubview($0)
+        }
+        #else
         [topView, bottomView].flatMap({ $0 }).forEach {
             presentingView.addSubview($0)
         }
+        #endif
         
         return {
             if let topView = topView {
