@@ -149,7 +149,11 @@ public final class OBKenBurnsView: UIView {
 
 private extension OBKenBurnsView {
     var allKenBurnsSubviews: [OBKenBurnsSubview] {
+        #if swift(>=4.1)
+        return subviews.compactMap { $0 as? OBKenBurnsSubview }
+        #else
         return subviews.flatMap { $0 as? OBKenBurnsSubview }
+        #endif
     }
     
     func addImageSubview(_ image: UIImage?) {
