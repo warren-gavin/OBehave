@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uWp-5i-fS6">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="uWp-5i-fS6">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -38,9 +38,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Cpa-h5-2CY" kind="show" id="5le-Ub-aRm">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="Cpa-h5-2CY" kind="show" id="5le-Ub-aRm"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="7gs-AK-kVx" style="IBUITableViewCellStyleDefault" id="wKF-q1-IJI">
@@ -60,9 +58,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="ujG-Oc-FYK" kind="show" id="Eya-IO-ja1">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="ujG-Oc-FYK" kind="show" id="Eya-IO-ja1"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="yg7-Sr-Kev" style="IBUITableViewCellStyleDefault" id="kde-P2-n85">
@@ -82,9 +78,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="J2Q-av-IPB" kind="show" id="hT6-f0-iaK">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="J2Q-av-IPB" kind="show" id="hT6-f0-iaK"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -152,9 +146,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="v80-4o-BfH" kind="show" id="TzL-85-BBL">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="v80-4o-BfH" kind="show" id="TzL-85-BBL"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="Zd7-zI-FxU" style="IBUITableViewCellStyleDefault" id="T0n-Lu-V86">
@@ -174,9 +166,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="eaK-AF-0TV" kind="show" id="GjV-P4-p6y">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="eaK-AF-0TV" kind="show" id="GjV-P4-p6y"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="JA4-c5-pQ3" style="IBUITableViewCellStyleDefault" id="wYA-Aq-g5W">
@@ -196,9 +186,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="uYB-9h-kvs" kind="show" id="Bqq-Th-21b">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="uYB-9h-kvs" kind="show" id="Bqq-Th-21b"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="iFd-qN-Nox" style="IBUITableViewCellStyleDefault" id="hXO-6g-rgN">
@@ -242,9 +230,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="NeJ-rT-08e" kind="show" id="fVf-vD-NAP">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="NeJ-rT-08e" kind="show" id="fVf-vD-NAP"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="6n8-Gw-7bA" style="IBUITableViewCellStyleDefault" id="Czo-Sk-ZCT">
@@ -288,9 +274,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="FED-4D-NNh" kind="show" id="75a-5W-fST">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="FED-4D-NNh" kind="show" id="75a-5W-fST"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="2O8-5a-ZQx" style="IBUITableViewCellStyleDefault" id="bV8-R9-kVK">
@@ -310,9 +294,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="JBt-1c-4Or" kind="show" id="vdy-EE-yV8">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="JBt-1c-4Or" kind="show" id="vdy-EE-yV8"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="ovX-ar-nGa" style="IBUITableViewCellStyleDefault" id="xzH-h7-C7Q">
@@ -332,9 +314,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="jjy-o4-AcP" kind="show" id="yz9-3p-d8A">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="jjy-o4-AcP" kind="show" id="yz9-3p-d8A"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="vh0-BK-OSO" style="IBUITableViewCellStyleDefault" id="km2-5f-SzY">
@@ -354,9 +334,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="29Z-78-In9" kind="show" id="d0o-ZT-eg7">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="29Z-78-In9" kind="show" id="d0o-ZT-eg7"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -380,9 +358,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="E0O-T5-YPC" kind="show" id="M5A-8M-knG">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="E0O-T5-YPC" kind="show" id="M5A-8M-knG"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -406,9 +382,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="UiA-L5-vkQ" kind="show" id="MSh-nI-74T">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="UiA-L5-vkQ" kind="show" id="MSh-nI-74T"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -432,9 +406,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="OWi-B3-ywf" kind="show" id="dRJ-4u-nK3">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="OWi-B3-ywf" kind="show" id="dRJ-4u-nK3"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -458,9 +430,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="75q-Vb-A7U" kind="show" id="arE-Me-6GU">
-                                                <nil key="action"/>
-                                            </segue>
+                                            <segue destination="75q-Vb-A7U" kind="show" id="arE-Me-6GU"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" textLabel="hNx-91-RVc" style="IBUITableViewCellStyleDefault" id="Mlg-A2-K0P">
@@ -1203,6 +1173,14 @@ With large text sizes this screen should scroll.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wt7-Fz-Dpp" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="Vae-yA-gdB" customClass="OBStretchyTableHeaderBehavior" customModule="OBehave">
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="minHeaderHeight">
+                            <real key="value" value="80"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="maxEffectDistance">
+                            <real key="value" value="-50"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="imageView" destination="LMA-b3-OL3" id="Gmo-XT-DVK"/>
                         <outlet property="owner" destination="NeJ-rT-08e" id="NL4-wV-kLH"/>
@@ -1936,6 +1914,14 @@ With large text sizes this screen should scroll.</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3aI-xW-JQm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <customObject id="6DE-8U-iRx" customClass="OBStretchyTableHeaderBehavior" customModule="OBehave">
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="minHeaderHeight">
+                            <real key="value" value="120"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="maxEffectDistance">
+                            <real key="value" value="-100"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                     <connections>
                         <outlet property="effect" destination="jzB-mX-fDK" id="RZ1-xl-Ru4"/>
                         <outlet property="imageView" destination="zlR-0d-SBu" id="7z2-gJ-Wj0"/>
