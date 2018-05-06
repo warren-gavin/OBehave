@@ -50,7 +50,7 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
                     return 0
                 }
                 
-                if let _ = owner.navigationController {
+                if let navigationController = owner.navigationController, !navigationController.navigationBar.isHidden {
                     return 0
                 }
                 
