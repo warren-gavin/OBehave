@@ -8,14 +8,12 @@
 
 import UIKit
 
-public protocol OBStretchyTableHeaderBehaviorDataSource: OBBehaviorDataSource {
-    var maxEffectDistance: CGFloat { get }
-    var minHeaderHeight: CGFloat { get }
-}
-
 public final class OBStretchyTableHeaderBehavior: OBBehavior {
     private var observeImageView: NSKeyValueObservation?
     private var observeTableView: NSKeyValueObservation?
+    
+    @IBInspectable var minHeaderHeight: CGFloat = .minHeaderHeight
+    @IBInspectable var maxEffectDistance: CGFloat = .maxEffectDistance
     
     // MARK: Outlets
     @IBOutlet public var imageView: UIImageView? {
@@ -24,13 +22,13 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
             setImageObserver()
         }
     }
-
+    
     @IBOutlet public var tableView: UITableView? {
         didSet {
             guard let tableView = tableView, let tableHeaderView = tableView.tableHeaderView else {
                 return
             }
-
+            
             observeTableView = tableView.observe(\.bounds, options: .new) { [unowned self] (_, _) in
                 self.updateHeaderViewInView()
             }
@@ -70,7 +68,7 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
             
             tableView.tableHeaderView = nil
             updateHeaderViewInView()
-
+            
             headerView.clipsToBounds = true
             tableView.insertSubview(headerView, at: 0)
             tableView.bringSubview(toFront: headerView)
@@ -98,10 +96,6 @@ private extension OBStretchyTableHeaderBehavior {
         guard let tableView = tableView else {
             return
         }
-        
-        let dataSource: OBStretchyTableHeaderBehaviorDataSource? = getDataSource()
-        let minHeaderHeight = dataSource?.minHeaderHeight ?? .minHeaderHeight
-        let maxEffectDistance = dataSource?.maxEffectDistance ?? .maxEffectDistance
         
         let headerRect = CGRect(x: 0,
                                 y: tableView.contentOffset.y,
