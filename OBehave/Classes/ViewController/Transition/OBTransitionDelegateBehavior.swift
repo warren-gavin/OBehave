@@ -10,11 +10,11 @@ import UIKit
 
 /// Transition animation settings
 public protocol OBTransitionDelegateBehaviorDataSource: OBBehaviorDataSource {
-    var duration: TimeInterval          { get }
-    var delay: TimeInterval             { get }
-    var damping: CGFloat                { get }
-    var velocity: CGFloat               { get }
-    var options: UIViewAnimationOptions { get }
+    var duration: TimeInterval           { get }
+    var delay: TimeInterval              { get }
+    var damping: CGFloat                 { get }
+    var velocity: CGFloat                { get }
+    var options: UIView.AnimationOptions { get }
 
     func presentationController(forPresented presented: UIViewController,
                                 presenting: UIViewController?,
@@ -38,7 +38,7 @@ extension OBTransitionDelegateBehaviorDataSource {
         return .defaultVelocity
     }
     
-    public var options: UIViewAnimationOptions {
+    public var options: UIView.AnimationOptions {
         return .defaultOptions
     }
     
@@ -125,7 +125,7 @@ extension OBTransitionDelegateBehavior {
         return dataSource?.velocity ?? .defaultVelocity
     }
     
-    public var options: UIViewAnimationOptions {
+    public var options: UIView.AnimationOptions {
         let dataSource: OBTransitionDelegateBehaviorDataSource? = getDataSource()
         return dataSource?.options ?? .defaultOptions
     }
@@ -192,8 +192,8 @@ private extension CGFloat {
     static let defaultVelocity: CGFloat = 0.0
 }
 
-private extension UIViewAnimationOptions {
-    static let defaultOptions: UIViewAnimationOptions = [.allowUserInteraction, .curveEaseInOut]
+private extension UIView.AnimationOptions {
+    static let defaultOptions: UIView.AnimationOptions = [.allowUserInteraction, .curveEaseInOut]
 }
 
 /// From the UIViewControllerTransitioningDelegate documentation:

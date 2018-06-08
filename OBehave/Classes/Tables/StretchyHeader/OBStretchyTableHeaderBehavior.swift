@@ -55,7 +55,7 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
                 return UIApplication.shared.statusBarFrame.size.height
             }()
             
-            tableView?.contentInset = UIEdgeInsetsMake(headerHeight - headerHeightAdjustment, 0, 0, 0)
+            tableView?.contentInset = UIEdgeInsets(top: headerHeight - headerHeightAdjustment, left: 0, bottom: 0, right: 0)
             tableView?.contentOffset = CGPoint(x: 0, y: -headerHeight)
         }
     }
@@ -71,7 +71,7 @@ public final class OBStretchyTableHeaderBehavior: OBBehavior {
             
             headerView.clipsToBounds = true
             tableView.insertSubview(headerView, at: 0)
-            tableView.bringSubview(toFront: headerView)
+            tableView.bringSubviewToFront(headerView)
         }
     }
     

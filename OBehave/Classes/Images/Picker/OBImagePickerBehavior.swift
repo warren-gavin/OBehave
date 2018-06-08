@@ -65,10 +65,10 @@ public final class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataS
         }
     }
 
-    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true) { [unowned self] in
             let delegate: OBImagePickerBehaviorDelegate? = self.getDelegate()
-            let image = info[UIImagePickerControllerOriginalImage] as? UIImage
+            let image = info[.originalImage] as? UIImage
             
             self.imageView?.image = image
             delegate?.imagePicker?(self, didSelectImage: image)
@@ -77,7 +77,7 @@ public final class OBImagePickerBehavior: OBBehavior, OBImagePickerBehaviorDataS
 }
 
 private extension OBImagePickerBehavior {
-    func pickImage(_ sourceType: UIImagePickerControllerSourceType) {
+    func pickImage(_ sourceType: UIImagePickerController.SourceType) {
         let imagePicker = UIImagePickerController()
         
         imagePicker.modalPresentationStyle = .fullScreen

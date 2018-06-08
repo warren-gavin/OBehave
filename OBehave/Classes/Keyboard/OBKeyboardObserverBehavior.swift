@@ -61,8 +61,8 @@ open class OBKeyboardObserverBehavior: OBBehavior {
         let notificationCenter = NotificationCenter.default
 
         notificationCenter.addObserver(self, selector: .dismissKeyboard,  name: .dismissKeyboard,    object: nil)
-        notificationCenter.addObserver(self, selector: .keyboardWillShow, name: .UIKeyboardWillShow, object: nil)
-        notificationCenter.addObserver(self, selector: .keyboardWillHide, name: .UIKeyboardWillHide, object: nil)
+        notificationCenter.addObserver(self, selector: .keyboardWillShow, name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self, selector: .keyboardWillHide, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     deinit {
@@ -172,9 +172,9 @@ private extension OBKeyboardObserverBehavior {
      */
     func animateAlongsideKeyboard(keyboardInfo: [String: NSValue]?, animation: @escaping (CGRect) -> Void, completion: ((Bool) -> Void)?) {
         guard
-            let endFrame = keyboardInfo?[UIKeyboardFrameEndUserInfoKey]?.cgRectValue,
-            let duration = keyboardInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-            let options = keyboardInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber,
+            let endFrame = keyboardInfo?[UIResponder.keyboardFrameEndUserInfoKey]?.cgRectValue,
+            let duration = keyboardInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? NSNumber,
+            let options = keyboardInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? NSNumber,
             !locked
         else {
             return
@@ -183,7 +183,7 @@ private extension OBKeyboardObserverBehavior {
         self.keyboardInfo = keyboardInfo
 
         // The keyboard animation is not documented, so we have to hack the value a little to get it out of the keyboard info
-        var animationCurve = UIViewAnimationOptions.curveEaseInOut
+        var animationCurve = UIView.AnimationOptions.curveEaseInOut
         NSNumber(value: options.intValue << 16).getValue(&animationCurve)
         
         let animateAndLayout: () -> Void = {

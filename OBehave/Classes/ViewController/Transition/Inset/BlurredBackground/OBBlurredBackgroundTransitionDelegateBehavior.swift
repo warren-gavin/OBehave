@@ -12,13 +12,7 @@ import UIKit
  Present a small view modally, with a blurred background chrome.
  */
 public final class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewControllerBehavior {
-    @IBInspectable public var blurStyle: Int = .defaultBlurStyle {
-        didSet {
-            if nil == UIBlurEffectStyle(rawValue: blurStyle) {
-                blurStyle = .defaultBlurStyle
-            }
-        }
-    }
+    @IBInspectable public var blurStyle: Int = UIBlurEffect.Style.defaultBlurStyle.rawValue
     
     // MARK: UIViewControllerTransitioningDelegate
     func presentationController(forPresented presented: UIViewController,
@@ -32,12 +26,12 @@ public final class OBBlurredBackgroundTransitionDelegateBehavior: OBInsetViewCon
                                                                                presenting: presenting)
         
         presentationController.dataSource = self
-        presentationController.blurStyle  = UIBlurEffectStyle(rawValue: blurStyle)!
+        presentationController.blurStyle  = UIBlurEffect.Style(rawValue: blurStyle) ?? .defaultBlurStyle
         
         return presentationController
     }
 }
 
-private extension Int {
-    static let defaultBlurStyle = UIBlurEffectStyle.dark.rawValue
+private extension UIBlurEffect.Style {
+    static let defaultBlurStyle = UIBlurEffect.Style.dark
 }

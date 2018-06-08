@@ -253,12 +253,14 @@
 					B01119ED1F55CE0400CA0418 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 8PKALBM6Q4;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = B01119D91F55CE0400CA0418;
 					};
 					B01119F81F55CE0400CA0418 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 8PKALBM6Q4;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 						TestTargetID = B01119D91F55CE0400CA0418;
 					};
@@ -583,7 +585,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -598,7 +600,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamples;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
@@ -612,7 +614,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamplesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OBehaveExamples.app/OBehaveExamples";
 			};
 			name = Debug;
@@ -627,7 +629,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamplesTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OBehaveExamples.app/OBehaveExamples";
 			};
 			name = Release;
@@ -641,7 +643,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamplesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = OBehaveExamples;
 			};
 			name = Debug;
@@ -655,7 +657,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apokrupto.OBehaveExamplesUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TEST_TARGET_NAME = OBehaveExamples;
 			};
 			name = Release;

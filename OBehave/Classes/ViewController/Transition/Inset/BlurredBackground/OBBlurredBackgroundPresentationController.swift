@@ -10,7 +10,7 @@ import UIKit
 
 /// Custom presentation controller that displays a view over a blurred background
 internal class OBBlurredBackgroundPresentationController: OBInsetPresentationController {
-    var blurStyle: UIBlurEffectStyle = .light
+    var blurStyle: UIBlurEffect.Style = .light
 
     override func backgroundViewForPresentation() -> UIView? {
         guard let containerView = containerView else {

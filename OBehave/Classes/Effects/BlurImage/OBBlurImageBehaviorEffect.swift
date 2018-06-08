@@ -29,9 +29,13 @@ public final class OBBlurImageBehaviorEffect: OBBehaviorEffect {
 private extension CGFloat {
     static let maxRadius:  CGFloat = 40.0
     static let saturation: CGFloat = 1.0
+    static let effectSaturation: CGFloat = 1.8
+    static let effectColorAlpha: CGFloat = 0.6
+    static let saturationDivisor: CGFloat = 256.0
+    static let floatEpsilon = CGFloat(Float.ulpOfOne)
 }
 
-extension UIBlurEffectStyle {
+extension UIBlurEffect.Style {
     func color() -> UIColor {
         switch self {
         case .extraLight:
@@ -57,16 +61,6 @@ extension UIBlurEffectStyle {
 }
 
 extension UIImage {
-    private struct Defaults {
-        static let effectSaturation: CGFloat = 1.8
-        static let effectColorAlpha: CGFloat = 0.6
-    }
-    
-    private struct Constants {
-        static let saturationDivisor: CGFloat = 256.0
-        static let floatEpsilon = CGFloat(Float.ulpOfOne)
-    }
-    
     private func createEffectBuffer(context: CGContext) -> vImage_Buffer {
         return vImage_Buffer(data: context.data,
                              height: vImagePixelCount(context.height),
@@ -80,7 +74,7 @@ extension UIImage {
         var effectInBuffer = createEffectBuffer(context: effectInContext)
         var effectOutBuffer = createEffectBuffer(context: effectOutContext)
         
-        if inputRadius > Constants.floatEpsilon {
+        if inputRadius > .floatEpsilon {
             let tmp = floor(inputRadius * 3.0 * CGFloat(sqrt(2 * .pi)) / 4 + 0.5)
             var radius = UInt32(tmp)
             radius += (radius % 2 == 0 ? 1 : 0)
@@ -135,22 +129,22 @@ extension UIImage {
                 0.2126 - 0.2126 * s,  0.2126 - 0.2126 * s,  0.2126 + 0.7873 * s,  0,
                 0,                    0,                    0,                    1
                 ].map { (value: CGFloat) -> Int16 in
-                    Int16(round(value * Constants.saturationDivisor))
+                    Int16(round(value * .saturationDivisor))
             }
             
             var srcBuffer = effectInBuffer
             var dstBuffer = effectOutBuffer
             
-            if blurRadius > Constants.floatEpsilon {
+            if blurRadius > .floatEpsilon {
                 srcBuffer = effectOutBuffer
                 dstBuffer = effectInBuffer
-                effectImageBuffersAreSwapped = (blurRadius > Constants.floatEpsilon)
+                effectImageBuffersAreSwapped = (blurRadius > .floatEpsilon)
             }
             
             vImageMatrixMultiply_ARGB8888(&srcBuffer,
                                           &dstBuffer,
                                           saturationMatrix,
-                                          Int32(Constants.saturationDivisor),
+                                          Int32(.saturationDivisor),
                                           nil,
                                           nil,
                                           vImage_Flags(kvImageNoFlags))
@@ -216,7 +210,7 @@ extension UIImage {
     }
     
     @nonobjc
-    internal func applyBlurEffect(effect: UIBlurEffectStyle, saturation: CGFloat = Defaults.effectSaturation) -> UIImage? {
+    internal func applyBlurEffect(effect: UIBlurEffect.Style, saturation: CGFloat = .effectSaturation) -> UIImage? {
         return applyBlur(withRadius: effect.radius(), tintColor: effect.color(), saturationDeltaFactor: saturation)
     }
     
@@ -229,7 +223,7 @@ extension UIImage {
         var blue: CGFloat  = 0
         
         if tintColor.getRed(&red, green: &green, blue: &blue, alpha: nil) {
-            effectColor = UIColor(red: red, green: green, blue: blue, alpha: Defaults.effectColorAlpha)
+            effectColor = UIColor(red: red, green: green, blue: blue, alpha: .effectColorAlpha)
         }
         
         return applyBlur(withRadius: 10, tintColor: effectColor, saturationDeltaFactor: -1.0, maskImage: nil)
@@ -250,8 +244,8 @@ extension UIImage {
             return nil
         }
         
-        let hasBlur = blurRadius > Constants.floatEpsilon
-        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > Constants.floatEpsilon
+        let hasBlur = blurRadius > .floatEpsilon
+        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > .floatEpsilon
         
         let screenScale = UIScreen.main.scale
         let imageRect = CGRect(origin: .zero, size: size)

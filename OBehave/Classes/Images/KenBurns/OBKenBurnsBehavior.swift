@@ -122,7 +122,7 @@ public final class OBKenBurnsView: UIView {
         let subViewToDisplay = kenBurnsSubviews[Int(arc4random_uniform(UInt32(kenBurnsSubviews.count - 1)))]
         
         subViewToDisplay.alpha = 0.0
-        bringSubview(toFront: subViewToDisplay)
+        bringSubviewToFront(subViewToDisplay)
         
         let showSubviews = {
             subViewToDisplay.alpha = 1.0
@@ -141,7 +141,7 @@ public final class OBKenBurnsView: UIView {
         
         UIView.animate(withDuration: transitionTime,
                        delay: sceneDuration,
-                       options: UIViewAnimationOptions(),
+                       options: UIView.AnimationOptions(),
                        animations:showSubviews,
                        completion: completion)
     }
@@ -171,7 +171,7 @@ private extension OBKenBurnsView {
         
         subview.translatesAutoresizingMaskIntoConstraints = false
         addSubview(subview)
-        sendSubview(toBack: subview)
+        sendSubviewToBack(subview)
 
         subview.topAnchor.constraint(equalTo: topAnchor).isActive = true
         subview.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
@@ -304,8 +304,8 @@ private class OBKenBurnsSubview: UIScrollView {
                 let rect = CGRect(origin: offset, size: CGSize(width: self.bounds.size.width / zoom, height: 1))
                 self.zoom(to: rect, animated: false)
                 
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64((self.pause + duration) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) { [unowned self] in
-                    self.startAnimating()
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64((self.pause + duration) * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)) { [weak self] in
+                    self?.startAnimating()
                 }
             }
             
