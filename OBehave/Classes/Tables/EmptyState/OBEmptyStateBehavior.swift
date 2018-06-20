@@ -160,9 +160,7 @@ private struct Constants {
 
 extension DataDisplaying {
     var isEmpty: Bool {
-        return 0 == (0 ..< numberOfSections).reduce(0) { (result, section) in
-            result + count(for: section)
-        }
+        return 0 == (0 ..< numberOfSections).reduce(0) { $0 + count(for: $1) }
     }
     
     var emptyStateView: UIView? {
@@ -172,13 +170,13 @@ extension DataDisplaying {
             }
 
             let emptyStateView = emptyStateDataSource?.viewToDisplayOnEmpty(for: nil)
-            objc_setAssociatedObject(self, &Constants.emptyStateViewKey, emptyStateView, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Constants.emptyStateViewKey, emptyStateView, .OBJC_ASSOCIATION_ASSIGN)
 
             return emptyStateView
         }
         
         set {
-            objc_setAssociatedObject(self, &Constants.emptyStateViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Constants.emptyStateViewKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
     
@@ -188,7 +186,7 @@ extension DataDisplaying {
         }
         
         set {
-            objc_setAssociatedObject(self, &Constants.emptyStateDataSourceKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Constants.emptyStateDataSourceKey, newValue, .OBJC_ASSOCIATION_ASSIGN)
         }
     }
     
@@ -198,7 +196,7 @@ extension DataDisplaying {
         }
         
         set {
-            objc_setAssociatedObject(self, &Constants.isSwizzledKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(self, &Constants.isSwizzledKey, newValue, .OBJC_ASSOCIATION_COPY)
         }
     }
 }
@@ -244,7 +242,7 @@ extension UICollectionView: DataDisplaying {
     }
     
     @objc func ob_performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
-        return ob_performBatchUpdates(updates) { ok in
+        return ob_performBatchUpdates(updates) { [unowned self] ok in
             completion?(ok)
             self.showEmptyState = self.isEmpty
         }
