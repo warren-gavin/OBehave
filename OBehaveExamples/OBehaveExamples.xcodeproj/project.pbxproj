@@ -17,6 +17,7 @@
 		B0111A581F55EA7600CA0418 /* BarCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0111A561F55EA7600CA0418 /* BarCodeScannerViewController.swift */; };
 		B0111A591F55EA7600CA0418 /* PhoneCallViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0111A571F55EA7600CA0418 /* PhoneCallViewController.swift */; };
 		B09EF27D1F7EB2D200DCD054 /* OBehave.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B0111A111F55CE1600CA0418 /* OBehave.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B0C3C7B820DA6C2500F3E904 /* EmptyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C3C7B720DA6C2500F3E904 /* EmptyTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		B0111A0B1F55CE1600CA0418 /* OBehave.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OBehave.xcodeproj; path = ../OBehave.xcodeproj; sourceTree = "<group>"; };
 		B0111A561F55EA7600CA0418 /* BarCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarCodeScannerViewController.swift; sourceTree = "<group>"; };
 		B0111A571F55EA7600CA0418 /* PhoneCallViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhoneCallViewController.swift; sourceTree = "<group>"; };
+		B0C3C7B720DA6C2500F3E904 /* EmptyTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 				B01119E41F55CE0400CA0418 /* Assets.xcassets */,
 				B01119E61F55CE0400CA0418 /* LaunchScreen.storyboard */,
 				B01119E91F55CE0400CA0418 /* Info.plist */,
+				B0C3C7B720DA6C2500F3E904 /* EmptyTableViewController.swift */,
 			);
 			path = OBehaveExamples;
 			sourceTree = "<group>";
@@ -344,6 +347,7 @@
 				B0111A591F55EA7600CA0418 /* PhoneCallViewController.swift in Sources */,
 				B0111A581F55EA7600CA0418 /* BarCodeScannerViewController.swift in Sources */,
 				B01119DE1F55CE0400CA0418 /* AppDelegate.swift in Sources */,
+				B0C3C7B820DA6C2500F3E904 /* EmptyTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
