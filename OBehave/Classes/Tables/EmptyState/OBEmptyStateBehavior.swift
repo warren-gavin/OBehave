@@ -143,8 +143,7 @@ extension DataDisplaying where Self: UIView {
                 layoutIfNeeded()
             }
             else {
-                emptyStateView.removeFromSuperview()
-                self.emptyStateView = nil
+                clearEmptyStateView()
             }
 
             emptyStateView.alpha = (newValue ? 1.0 : 0.0)
@@ -158,7 +157,7 @@ private struct Constants {
     static var emptyStateDataSourceKey = "com.apokrupto.OBEmptyDateSetBehavior.emptyStateDataSource"
 }
 
-extension DataDisplaying {
+private extension DataDisplaying {
     var isEmpty: Bool {
         return 0 == (0 ..< numberOfSections).reduce(0) { $0 + count(for: $1) }
     }
@@ -199,6 +198,11 @@ extension DataDisplaying {
             objc_setAssociatedObject(self, &Constants.isSwizzledKey, newValue, .OBJC_ASSOCIATION_COPY)
         }
     }
+    
+    func clearEmptyStateView() {
+        emptyStateView?.removeFromSuperview()
+        emptyStateView = nil
+    }
 }
 
 // MARK: - Extending table and collection views to conform to DataDisplaying
@@ -206,14 +210,20 @@ extension UITableView: DataDisplaying {
     func count(for section: Int) -> Int {
         return dataSource?.tableView(self, numberOfRowsInSection: section) ?? 0
     }
-
+    
     @objc func ob_reloadData() {
-        showEmptyState = isEmpty
+        defer {
+            showEmptyState = isEmpty
+        }
+        
+        clearEmptyStateView()
         return ob_reloadData()
     }
     
     @objc func ob_endUpdates() {
+        clearEmptyStateView()
         showEmptyState = isEmpty
+        
         return ob_endUpdates()
     }
     
@@ -238,12 +248,15 @@ extension UICollectionView: DataDisplaying {
             showEmptyState = isEmpty
         }
         
+        clearEmptyStateView()
         return ob_reloadData()
     }
     
     @objc func ob_performBatchUpdates(_ updates: (() -> Void)?, completion: ((Bool) -> Void)? = nil) {
         return ob_performBatchUpdates(updates) { [unowned self] ok in
             completion?(ok)
+            
+            self.clearEmptyStateView()
             self.showEmptyState = self.isEmpty
         }
     }
