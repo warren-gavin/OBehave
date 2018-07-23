@@ -32,7 +32,7 @@ extension BarCodeScannerViewController: OBBarCodeScannerBehaviorDelegate {
         displayScannedData()
     }
     
-    func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didFailWithError error: NSError?) {
+    func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didFailWithError error: OBBarCodeScannerError) {
         scannedDataLabel.text = "No data"
         displayScannedData(forceDisplay: true)
     }
@@ -40,9 +40,11 @@ extension BarCodeScannerViewController: OBBarCodeScannerBehaviorDelegate {
 
 private extension BarCodeScannerViewController {
     func displayScannedData(forceDisplay: Bool = false) {
-        if !displaying || forceDisplay {
-            NotificationCenter.default.post(name: .obAnimationExecute, object: self)
-            displaying = true
+        DispatchQueue.main.async { [unowned self] in
+            if !self.displaying || forceDisplay {
+                NotificationCenter.default.post(name: .obAnimationExecute, object: self)
+                self.displaying = true
+            }
         }
     }
 }
