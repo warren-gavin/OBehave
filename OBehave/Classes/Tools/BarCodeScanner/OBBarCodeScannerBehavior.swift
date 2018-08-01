@@ -9,9 +9,14 @@
 import UIKit
 import AVFoundation
 
+public enum OBBarCodeScannerError {
+    case unauthorized
+    case unknown
+}
+
 public protocol OBBarCodeScannerBehaviorDelegate: OBBehaviorDelegate {
     func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didScanBarCodeString string: String, frame: CGRect)
-    func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didFailWithError error: NSError?)
+    func barCodeScanner(_ scanner: OBBarCodeScannerBehavior, didFailWithError error: OBBarCodeScannerError)
 }
 
 public final class OBBarCodeScannerBehavior: OBBehavior {
@@ -42,23 +47,33 @@ public final class OBBarCodeScannerBehavior: OBBehavior {
     
     private lazy var session: AVCaptureSession = AVCaptureSession()
     private var containerBoundsObserver: NSKeyValueObservation?
-
+    
     private lazy var cameraPreviewLayer: AVCaptureVideoPreviewLayer = {
         var layer = AVCaptureVideoPreviewLayer(session: self.session)
         layer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-
+        
         return layer
     }()
     
     // MARK: Public
     override public func setup() {
         super.setup()
-        setupBarCodeScanner()
+        checkCameraAccess(completion: setupBarCodeScanner)
     }
     
     deinit {
         session.stopRunning()
         cameraPreviewLayer.removeFromSuperlayer()
+    }
+    
+    /// The scanner is running by default. This method isn't necessary
+    /// unless you have previously called `stop()`
+    public func start() {
+        session.startRunning()
+    }
+    
+    public func stop() {
+        session.stopRunning()
     }
 }
 
@@ -69,13 +84,31 @@ private extension OBBarCodeScannerBehavior {
         }
     }
     
-    func setupBarCodeScanner() {
+    func checkCameraAccess(completion: @escaping (Bool) -> Void) {
+        switch AVCaptureDevice.authorizationStatus(for: .video) {
+        case .authorized:
+            completion(true)
+            
+        case .restricted, .denied:
+            completion(false)
+            
+        case .notDetermined:
+            AVCaptureDevice.requestAccess(for: .video) { authorized in
+                DispatchQueue.main.async {
+                    completion(authorized)
+                }
+            }
+        }
+    }
+    
+    func setupBarCodeScanner(authorized: Bool) {
         guard
+            authorized,
             let device = AVCaptureDevice.default(for: AVMediaType.video),
             let input = try? AVCaptureDeviceInput(device: device)
         else {
             let delegate: OBBarCodeScannerBehaviorDelegate? = getDelegate()
-            delegate?.barCodeScanner(self, didFailWithError: nil)
+            delegate?.barCodeScanner(self, didFailWithError: authorized ? .unknown : .unauthorized)
             
             return
         }
@@ -101,8 +134,8 @@ extension OBBarCodeScannerBehavior: AVCaptureMetadataOutputObjectsDelegate {
         for metadata in metadataObjects {
             for type in supportedBarCodes {
                 if metadata.type == type,
-                   let bounds = cameraPreviewLayer.transformedMetadataObject(for: metadata)?.bounds,
-                   let stringValue = (metadata as? AVMetadataMachineReadableCodeObject)?.stringValue {
+                    let bounds = cameraPreviewLayer.transformedMetadataObject(for: metadata)?.bounds,
+                    let stringValue = (metadata as? AVMetadataMachineReadableCodeObject)?.stringValue {
                     barCodeBounds = bounds
                     barCodeString = stringValue
                     break
