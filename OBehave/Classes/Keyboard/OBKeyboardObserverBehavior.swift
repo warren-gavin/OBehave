@@ -75,7 +75,7 @@ open class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter rect: The end frame of the keyboard onscreen
      */
-    public func onKeyboardAppear(in rect: CGRect) {
+    open func onKeyboardAppear(in rect: CGRect) {
     }
 
     /**
@@ -85,10 +85,12 @@ open class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter rect: The end frame of the keyboard
      */
-    public func onKeyboardDisappear(in rect: CGRect) {
+    open func onKeyboardDisappear(in rect: CGRect) {
     }
-    
-    @objc public func endEditing() {
+}
+
+private extension OBKeyboardObserverBehavior {
+    @objc func endEditing() {
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillDisappear(from: self)
         
@@ -101,7 +103,7 @@ open class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter _: Gesture recogniser
      */
-    @objc public func dismissKeyboard(_: UITapGestureRecognizer) {
+    @objc func dismissKeyboard(_: UITapGestureRecognizer) {
         endEditing()
     }
 
@@ -110,7 +112,7 @@ open class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter notification: Notification object
      */
-    @objc public func keyboardWillShow(_ notification: NSNotification) {
+    @objc func keyboardWillShow(_ notification: NSNotification) {
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
         delegate?.keyboardWillAppear(from: self)
         
@@ -137,7 +139,7 @@ open class OBKeyboardObserverBehavior: OBBehavior {
      
      - parameter notification: Notification object
      */
-    @objc public func keyboardWillHide(_ notification: NSNotification) {
+    @objc func keyboardWillHide(_ notification: NSNotification) {
         locked = false
         
         let delegate: OBKeyboardObserverBehaviorDelegate? = getDelegate()
