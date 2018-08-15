@@ -245,7 +245,7 @@ extension UIImage {
         }
         
         let hasBlur = blurRadius > .floatEpsilon
-        let hasSaturationChange = fabs(saturationDeltaFactor - 1.0) > .floatEpsilon
+        let hasSaturationChange = abs(saturationDeltaFactor - 1.0) > .floatEpsilon
         
         let screenScale = UIScreen.main.scale
         let imageRect = CGRect(origin: .zero, size: size)
