@@ -34,7 +34,7 @@ open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCont
     }
 
     // MARK: OBKeyboardObserverBehavior
-    override public func onKeyboardAppear(in rect: CGRect) {
+    override open func onKeyboardAppear(in rect: CGRect) {
         guard
             let containerView = owner?.presentationController?.containerView,
             let presentationView = owner?.presentationController?.presentedView,
@@ -83,7 +83,7 @@ open class OBInsetViewControllerBehavior: OBKeyboardObserverBehavior, UIViewCont
         }
     }
     
-    override public func onKeyboardDisappear(in rect: CGRect) {
+    override open func onKeyboardDisappear(in rect: CGRect) {
         keyboardStartPosition = nil
         
         if let tapGesture = tapGesture  {
