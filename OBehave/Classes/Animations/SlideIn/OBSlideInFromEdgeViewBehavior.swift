@@ -43,7 +43,7 @@ private extension OBSlideInFromEdgeViewBehavior {
             if animated {
                 UIView.animate(withDuration: duration,
                                delay: delay,
-                               options: UIViewAnimationOptions.allowUserInteraction,
+                               options: .allowUserInteraction,
                                animations: setLayoutConstraints,
                                completion: nil)
             }

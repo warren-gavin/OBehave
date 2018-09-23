@@ -45,7 +45,7 @@ private extension OBRotateBehavior {
             }
         }
         
-        let options = (autoReverse ? UIViewAnimationOptions.autoreverse : UIViewAnimationOptions())
+        let options = (autoReverse ? UIView.AnimationOptions.autoreverse : UIView.AnimationOptions())
         
         UIView.animate(withDuration: duration,
                        delay: delay,
