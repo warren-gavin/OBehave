@@ -27,12 +27,6 @@ public final class OBPageViewControllerBehavior: OBBehavior {
     private var selectedIndex = 0 {
         didSet {
             pageControl?.currentPage = selectedIndex
-            
-            if !showPageControlOnLast {
-                UIView.animate(withDuration: 0.3) {
-                    self.pageControl?.alpha = (self.selectedIndex == self.viewControllers.count - 1 ? 0.0 : 1.0)
-                }
-            }
         }
     }
     
@@ -85,6 +79,10 @@ public final class OBPageViewControllerBehavior: OBBehavior {
                                                       animated: false,
                                                       completion: nil)
             }
+            
+            for subview in pageViewController.view.subviews.compactMap({ $0 as? UIScrollView }) {
+                subview.delegate = self
+            }
         }
     }
     
@@ -130,6 +128,28 @@ extension OBPageViewControllerBehavior: UIPageViewControllerDelegate {
                                    transitionCompleted completed: Bool) {
         if completed {
             selectedIndex = pendingSelectedIndex
+        }
+    }
+}
+
+extension OBPageViewControllerBehavior: UIScrollViewDelegate {
+    public func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !showPageControlOnLast, let width = viewControllers.first?.view.bounds.size.width else {
+            pageControl?.alpha = 1.0
+            return
+        }
+        
+        let offset = scrollView.contentOffset.x - width
+        
+        switch selectedIndex {
+        case viewControllers.count - 1:
+            pageControl?.alpha = max(0.0, -offset / width)
+            
+        case viewControllers.count - 2:
+            pageControl?.alpha = max(0.0, (width - offset) / width)
+            
+        default:
+            pageControl?.alpha = 1.0
         }
     }
 }
