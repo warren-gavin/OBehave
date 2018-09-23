@@ -15,7 +15,7 @@ final class OBOpenSettingsBehavior: OBBehavior {
      - parameter sender: UI element that instantiated the open settings.
      */
     @IBAction func openSettings(_ sender: AnyObject?) {
-        if let settingsUrl = URL(string: UIApplicationOpenSettingsURLString) {
+        if let settingsUrl = URL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(settingsUrl, options: [:], completionHandler: nil)
         }
     }

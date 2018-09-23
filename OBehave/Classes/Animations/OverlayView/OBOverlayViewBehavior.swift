@@ -44,7 +44,7 @@ public final class OBOverlayViewBehavior: OBBehavior {
         dimmingView.alpha = 0.0
 
         owner.view.addSubview(dimmingView)
-        owner.view.bringSubview(toFront: dimmingView)
+        owner.view.bringSubviewToFront(dimmingView)
         
         dimmingView.translatesAutoresizingMaskIntoConstraints = false
         dimmingView.backgroundColor = dimmingColor

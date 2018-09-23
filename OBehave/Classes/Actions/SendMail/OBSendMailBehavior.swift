@@ -12,7 +12,7 @@ import MessageUI
 public protocol OBSendMailBehaviorDataSource: OBBehaviorDataSource {
     var textColor: UIColor { get }
     var barColor: UIColor { get }
-    var textAttributes: [NSAttributedStringKey: Any]? { get }
+    var textAttributes: [NSAttributedString.Key: Any]? { get }
     
     func subject(for behavior: OBSendMailBehavior) -> String
     func address(for behavior: OBSendMailBehavior) -> String
@@ -83,7 +83,7 @@ private class MailComposeViewController: MFMailComposeViewController {
         return .lightContent
     }
     
-    override var childViewControllerForStatusBarStyle: UIViewController? {
+    override var childForStatusBarStyle: UIViewController? {
         return nil
     }
 }
