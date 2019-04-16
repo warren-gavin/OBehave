@@ -45,7 +45,11 @@ class OBFullScreenDisplayBehavior: OBBehavior {
     @IBOutlet var scrollView: UIScrollView!
     @IBOutlet var stackView: UIStackView! {
         didSet {
-            boundsChangeObserver = stackView.observe(\.bounds, options: .new) { stackView, _ in
+            boundsChangeObserver = stackView.observe(\.bounds, options: .new) { [weak self] stackView, _ in
+                guard let self = self else {
+                    return
+                }
+
                 let heightDifference = self.scrollView.bounds.height - stackView.bounds.height
                 
                 if heightDifference > 0 {
