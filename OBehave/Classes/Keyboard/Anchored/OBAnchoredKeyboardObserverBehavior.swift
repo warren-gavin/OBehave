@@ -34,7 +34,8 @@ public final class OBAnchoredKeyboardObserverBehavior: OBKeyboardObserverBehavio
             anchorConstraint?.constant -= newKeyboardStartPosition - keyboardStartPosition
         }
         else {
-            anchorConstraint?.constant += rect.height
+            let tabBar = owner?.tabBarController?.tabBar
+            anchorConstraint?.constant += rect.height - (tabBar?.bounds.size.height ?? 0)
         }
         
         keyboardStartPosition = newKeyboardStartPosition
