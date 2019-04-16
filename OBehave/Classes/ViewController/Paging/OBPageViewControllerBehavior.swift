@@ -97,7 +97,7 @@ public final class OBPageViewControllerBehavior: OBBehavior {
 
 extension OBPageViewControllerBehavior: UIPageViewControllerDataSource {
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.index(of: viewController), canMoveBack(from: index) else {
+        guard let index = viewControllers.firstIndex(of: viewController), canMoveBack(from: index) else {
             return nil
         }
         
@@ -105,7 +105,7 @@ extension OBPageViewControllerBehavior: UIPageViewControllerDataSource {
     }
     
     public func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        guard let index = viewControllers.index(of: viewController), canMoveForward(from: index) else {
+        guard let index = viewControllers.firstIndex(of: viewController), canMoveForward(from: index) else {
             return nil
         }
 
@@ -115,7 +115,10 @@ extension OBPageViewControllerBehavior: UIPageViewControllerDataSource {
 
 extension OBPageViewControllerBehavior: UIPageViewControllerDelegate {
     public func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
-        guard let pendingViewController = pendingViewControllers.first, let index = viewControllers.index(of: pendingViewController) else {
+        guard
+            let pendingViewController = pendingViewControllers.first,
+            let index = viewControllers.firstIndex(of: pendingViewController)
+        else {
             return
         }
         
