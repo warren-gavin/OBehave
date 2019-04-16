@@ -98,6 +98,9 @@ private extension OBBarCodeScannerBehavior {
                     completion(authorized)
                 }
             }
+
+        @unknown default:
+            completion(false)
         }
     }
     
