@@ -47,7 +47,7 @@ extension UIBlurEffect.Style {
         case .light, .prominent, .regular:
             return UIColor(white: 1.0, alpha: 0.3)
 
-        @unknown default:
+        default:
             return UIColor(white: 1.0, alpha: 0.3)
         }
     }
@@ -60,7 +60,7 @@ extension UIBlurEffect.Style {
         case .extraLight, .dark, .extraDark:
             return 20.0
 
-        @unknown default:
+        default:
             return 30.0
         }
     }
